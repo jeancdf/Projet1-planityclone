@@ -7,9 +7,9 @@
             <h4>Available Salons close to you</h4>
             <ul class="list-group">
                 <!-- List salons here -->
-                <li class="list-group-item">Salon 1</li>
-                <li class="list-group-item">Salon 2</li>
-                <!-- ... -->
+                <li class="list-group-item" *ngFor="let salon of salons" (click)="goToBooking(salon.id)">
+                    {{ salon.name }}
+                </li>
             </ul>
         </div>
         <!-- Right Column: Appointment Booking -->

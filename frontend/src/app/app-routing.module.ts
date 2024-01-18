@@ -24,7 +24,7 @@ const routes: Routes = [
   { path: 'salon-dashboard', component: SalonDashboardComponent},
   { path: 'salon-profile', component: SalonProfileComponent },
   { path: 'salon-slot-management', component: SalonSlotManagementComponent },
-  { path: 'appointment-booking', component: AppointmentBookingComponent },
+  { path: 'appointment-booking/:id', component: AppointmentBookingComponent },
   { path: 'salonlist', component: SalonListComponent,  },
 ];
 

@@ -1,1 +1,31 @@
-<p>admin-dashboard works!</p>
+<div class="admin-dashboard m-3">
+    <h2>Administrator Dashboard</h2>
+    <div class="dashboard-cards m-3">
+  
+      <!-- User Account Management Card -->
+      <div class="card m-3 p-4" (click)="navigateTo('/admin-user-managment')">
+        <h3>User Management</h3>
+        <p>Total Users: {{ totalUsers }}</p>
+        <!-- Add more quick stats if needed -->
+        <button>Manage Users</button>
+      </div>
+  
+      <!-- Salon Management Card -->
+      <div class="card m-3 p-4" (click)="navigateTo('/admin/salons')">
+        <h3>Salon Management</h3>
+        <p>Total Salons: {{ totalSalons }}</p>
+        <!-- Add more quick stats if needed -->
+        <button>Manage Salons</button>
+      </div>
+  
+      <!-- Analytics and Reporting Card -->
+      <div class="card m-3 p-4" (click)="navigateTo('/admin/analytics')">
+        <h3>Analytics & Reporting</h3>
+        <p>Reservations Today: {{ reservationsToday }}</p>
+        <!-- Add more quick stats if needed -->
+        <button>View Analytics</button>
+      </div>
+  
+    </div>
+  </div>
+  

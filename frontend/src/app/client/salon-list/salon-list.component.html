@@ -1,1 +1,9 @@
-<p>salon-list works!</p>
+<div class=" card m-5 p-4">
+    <h4>Available Salons</h4>
+    <ul class="list-group">
+      <li class="list-group-item mb-2" *ngFor="let salon of salons" (click)="selectSalon(salon.id)">
+        {{ salon.name }}
+      </li>
+    </ul>
+  </div>
+  
