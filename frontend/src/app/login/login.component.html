@@ -1,1 +1,27 @@
-<p>login works!</p>
+<div class="custom-container">
+    <form class="custom-form text-center">
+
+        <img src="../../assets/img/secret project-logos_black.png" alt="project-logos_black">
+        <!-- Email input -->
+        <div class="form-outline mb-4">
+            <input type="text" name="form2Example1" [(ngModel)]="username" class="form-control" />
+            <label class="form-label" for="form2Example1">Username</label>
+        </div>
+        
+        <!-- Password input -->
+        <div class="form-outline mb-4">
+            <input type="password" name="form2Example2" [(ngModel)]="password" class="form-control" />
+            <label class="form-label" for="form2Example2">Password</label>
+        </div>
+  
+        <!-- Submit button -->
+        <button type="button" class="btn btn-primary btn-block mb-4" (click)="onSubmit()">Sign in</button>
+        <br>
+        <button type="button" class="btn btn-secondary btn-block mb-4" (click)="onSignupClick()">Sign-up Instead</button>
+    </form>
+</div>
+
+
+
+
+
