@@ -1,1 +1,111 @@
-<p>navbar works!</p>
+<div id="app" class="fix" *ngIf="isLogged()">
+    <nav class="navbar navbar-expand navbar-dark bg-dark p-2 ">
+      <a class="navbar-brand ">Secret Project</a>
+  
+  
+      <!-- ADMIN -->
+  
+      <ul class="navbar-nav mr-auto" routerLinkActive="active" *ngIf="isAdmin()">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="admin-dashboard">admin home</a>
+        <li ngbDropdown class="nav-item">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="admin-user-managment">admin Experts</a>
+       
+        <li style="transform: translateX(20vw);">
+          <button class=" btn btn-success outline ">Admin</button>
+        </li>
+  
+        <li class="nav-item" style="transform: translateX(30vw);">
+          <a href class="nav-link" (click)="logout()">Log-Out</a>
+        </li>
+      </ul>
+  
+  
+      <!-- SALON -->
+  
+      <ul class="navbar-nav ml-5" *ngIf="isSalon()">
+        <li class="navbar-nav">
+          <a class="nav-link" routerLink="salon-dashboard">Dashboard</a>
+        </li>
+        <li class="navbar-nav">
+          <a class="nav-link" routerLink="salon-profile">Profile</a>
+        </li>
+        <li class="navbar-nav">
+          <a class="nav-link" routerLink="salon-slot-management">Orientation</a>
+        </li>
+        
+        <li style="transform: translateX(20vw);">
+          <button class=" btn btn-success outline ">Salon</button>
+        </li>
+  
+        <li class="nav-item" style="transform: translateX(20vw);">
+          <a href class="nav-link" (click)="logout()">Log-Out</a>
+        </li>
+      </ul>
+  
+  
+      <!-- ClIENT -->
+  
+      <ul class="navbar-nav ml-5" *ngIf="isClient()">
+        <li class="navbar-nav">
+          <a class="nav-link" routerLink="client-dashboard">home Client</a>
+        </li>
+        <li ngbDropdown class="nav-item">
+          <a class="nav-link dropdown-toggle" ngbDropdownToggle>teacher test</a>
+          <div ngbDropdownMenu class="dropdown-menu">
+            <a class="dropdown-item" routerLink="teacherprofile">teacher profile</a>
+            <a class="dropdown-item" routerLink="teacherevaluations">teachers evaluations</a>
+            <a class="dropdown-item" routerLink="teacherclasscreate">teacher class</a>
+          </div>
+        </li>
+        <li class="navbar-nav">
+          <a class="nav-link" routerLink="teacherressources">teacher ressources</a>
+        </li>
+        <li class="navbar-nav">
+          <a class="nav-link" routerLink="teacherclasses">teacherclasse</a>
+        </li>
+        <li><i class="fa fa-bell"></i></li>
+        
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/teachercoms">
+            <i class="pi pi-envelope" style="color: white;"></i> Messages
+          </a>
+        </li>
+        <li style="transform: translateX(20vw);">
+          <button class=" btn btn-success outline ">Teacher</button>
+        </li>
+  
+        <li class="nav-item" style="transform: translateX(25vw);">
+          <a href class="nav-link" (click)="logout()">Log-Out</a>
+        </li>
+  
+      </ul>
+  
+    </nav>
+  
+  </div>
+  
+  <!-- Navbar for unauthenticated users -->
+  <nav class="navbar navbar-expand navbar-dark bg-dark p-2"  *ngIf="isNotLogged()">
+    <a class="navbar-brand">Welcome</a>
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="home">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="offers">Offers</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="aboutus">About Us</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="login">Login</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="signup">Signup</a>
+      </li>
+    </ul>
+  </nav>
+  
+  
