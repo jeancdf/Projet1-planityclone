@@ -3,10 +3,20 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { LoginComponent } from './login/login.component';
+import { SalonDashboardComponent } from './salon/salon-dashboard/salon-dashboard.component';
+import { SalonSlotManagementComponent } from './salon/salon-slot-management/salon-slot-management.component';
+import { SalonProfileComponent } from './salon/salon-profile/salon-profile.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    NavbarComponent,
+    LoginComponent,
+    SalonDashboardComponent,
+    SalonSlotManagementComponent,
+    SalonProfileComponent
   ],
   imports: [
     BrowserModule,
