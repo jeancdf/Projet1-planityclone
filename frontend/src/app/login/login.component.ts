@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../service/auth.service';
 import { Router } from '@angular/router';
+import { TokenStorageService } from '../service/token-storage.service';
 
 @Component({
   selector: 'app-login',
@@ -8,8 +9,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  public username: string = '';
-  public password: string = '';
+  public username: any = '';
+  public password: any = '';
 
   form: any = {
     username: null,

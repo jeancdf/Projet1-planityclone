@@ -14,6 +14,8 @@ import { AppointmentBookingComponent } from './client/appointment-booking/appoin
 import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
 import { AdminUserManagmentComponent } from './admin/admin-user-managment/admin-user-managment.component';
 
+import { FormsModule } from '@angular/forms';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,7 +32,8 @@ import { AdminUserManagmentComponent } from './admin/admin-user-managment/admin-
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
