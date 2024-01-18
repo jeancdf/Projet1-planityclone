@@ -7,12 +7,6 @@ import (
 
 func helloWorldPage(w http.ResponseWriter, r *http.Request){
 	fmt.Fprint(w, "Hello World")
-	switch r.URL.Path{
-	case "/":
-		fmt.Fprint(w, "Hello World")
-	case "/ninja": 
-		fmt.F
-	}
 }
 
 func main() {
