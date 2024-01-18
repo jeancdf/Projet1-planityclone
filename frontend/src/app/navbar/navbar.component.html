@@ -1,11 +1,11 @@
-<div id="app" class="fix" *ngIf="isLogged()">
+<!-- <div id="app" class="fix" *ngIf="isLogged()">
     <nav class="navbar navbar-expand navbar-dark bg-dark p-2 ">
-      <a class="navbar-brand ">Secret Project</a>
+      <a class="navbar-brand ">InstantCoiffure</a>
   
   
       <!-- ADMIN -->
   
-      <ul class="navbar-nav mr-auto" routerLinkActive="active" *ngIf="isAdmin()">
+      <!-- <ul class="navbar-nav mr-auto" routerLinkActive="active" *ngIf="isAdmin()">
         <li class="nav-item">
           <a class="nav-link" routerLink="admin-dashboard">admin home</a>
         <li ngbDropdown class="nav-item">
@@ -19,12 +19,12 @@
         <li class="nav-item" style="transform: translateX(30vw);">
           <a href class="nav-link" (click)="logout()">Log-Out</a>
         </li>
-      </ul>
+      </ul> -->
   
   
       <!-- SALON -->
   
-      <ul class="navbar-nav ml-5" *ngIf="isSalon()">
+      <!-- <ul class="navbar-nav ml-5" *ngIf="isSalon()">
         <li class="navbar-nav">
           <a class="nav-link" routerLink="salon-dashboard">Dashboard</a>
         </li>
@@ -42,20 +42,20 @@
         <li class="nav-item" style="transform: translateX(20vw);">
           <a href class="nav-link" (click)="logout()">Log-Out</a>
         </li>
-      </ul>
+      </ul> -->
   
   
       <!-- ClIENT -->
   
-      <ul class="navbar-nav ml-5" *ngIf="isClient()">
+      <!-- <ul class="navbar-nav ml-5" *ngIf="isClient()">
         <li class="navbar-nav">
           <a class="nav-link" routerLink="client-dashboard">home Client</a>
         </li>
         <li class="navbar-nav">
-          <a class="nav-link" routerLink="teacherressources">teacher ressources</a>
+          <a class="nav-link" routerLink="appointment-booking">appointment booking</a>
         </li>
         <li class="navbar-nav">
-          <a class="nav-link" routerLink="teacherclasses">teacherclasse</a>
+          <a class="nav-link" routerLink="salonlist">salon list</a>
         </li>
         <li><i class="fa fa-bell"></i></li>
         <li style="transform: translateX(20vw);">
@@ -70,28 +70,66 @@
   
     </nav>
   
-  </div>
+  </div> -->
   
   <!-- Navbar for unauthenticated users -->
-  <nav class="navbar navbar-expand navbar-dark bg-dark p-2"  *ngIf="isNotLogged()">
+  <!-- <nav class="navbar navbar-expand navbar-dark bg-dark p-2"  >
     <a class="navbar-brand">Welcome</a>
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
         <a class="nav-link" routerLink="home">Home</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="offers">Offers</a>
-      </li>
-      <li class="nav-item">
         <a class="nav-link" routerLink="aboutus">About Us</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" routerLink="login">Login</a>
-      </li>
-      <li class="nav-item">
+      </li> -->
+      <!-- <li class="nav-item">
         <a class="nav-link" routerLink="signup">Signup</a>
-      </li>
-    </ul>
-  </nav>
+      </li> -->
+    <!-- </ul>
+  </nav> -->
   
+
+
+   <!-- app.component.html -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">App Name</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/login">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/salonlist">Salon List</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/admin-dashboard">Admin Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/admin-user-managment">Admin User Management</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/client-dashboard">Client Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/salon-dashboard">Salon Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/salon-profile">Salon Profile</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/salon-slot-management">Salon Slot Management</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/appointment-booking">Appointment Booking</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <router-outlet></router-outlet>
   

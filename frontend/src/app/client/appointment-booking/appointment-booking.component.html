@@ -1,1 +1,33 @@
-<p>appointment-booking works!</p>
+<mat-card>
+    <mat-card-title>Book Your Appointment</mat-card-title>
+    <mat-card-content>
+      <form (ngSubmit)="onSubmit()">
+        <!-- Date Selection -->
+        <mat-form-field appearance="fill">
+          <mat-label>Choose a date</mat-label>
+          <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDate" name="date" (dateChange)="onDateChange()">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+  
+        <!-- Time Slot Selection -->
+        <mat-form-field appearance="fill" *ngIf="timeSlots && timeSlots.length > 0">
+          <mat-label>Choose a time slot</mat-label>
+          <mat-select [(ngModel)]="selectedTimeSlot" name="time">
+            <mat-option *ngFor="let timeSlot of timeSlots" [value]="timeSlot">
+              {{ timeSlot }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+  
+        <!-- No Slots Available Message -->
+        <div *ngIf="timeSlots && timeSlots.length === 0">
+          <p>No available time slots for this date. Please choose another date.</p>
+        </div>
+  
+        <!-- Submit Button -->
+        <button mat-raised-button color="primary" type="submit" [disabled]="!selectedTimeSlot">Book Appointment</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+  

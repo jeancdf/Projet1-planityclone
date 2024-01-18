@@ -41,15 +41,15 @@ export class AuthGuard implements CanActivate {
   private handleRoleRedirect(userRole: string | null): void {
     // Define your redirects based on roles
     switch(userRole) {
-      case 'student':
-        this.router.navigate(['/student-dashboard']);
+      case 'client':
+        this.router.navigate(['/client-dashboard']);
         break;
-      case 'teacher':
-        this.router.navigate(['/teacher-dashboard']);
+      case 'salon':
+        this.router.navigate(['/salon-dashboard']);
         break;
       // Add cases for other roles as needed
       default:
-        this.router.navigate(['/unauthorized-access']); // Redirect to a default page for unauthorized access
+        this.router.navigate(['/login']); // Redirect to a default page for unauthorized access
     }
   }
     
