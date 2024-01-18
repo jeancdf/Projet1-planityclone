@@ -17,6 +17,10 @@ func Barbier(w http.ResponseWriter, r *http.Request){
 	fmt.Fprint(w, "Barbier")
 }
 
+func Manucure(w http.ResponseWriter, r *http.Request){
+	fmt.Fprint(w, "Manucure")
+}
+
 func main() {
 // Imprimez dans la console pour indiquer que le serveur a démarré
 fmt.Println("Server is running on :8080")
@@ -25,7 +29,7 @@ fmt.Println("Server is running on :8080")
 http.HandleFunc("/", helloWorldPage)
 http.HandleFunc("/Coiffeur", Coiffeur)
 http.HandleFunc("/Barbier", Barbier)
-http.HandleFunc("/Manucure", helloWorldPage)
+http.HandleFunc("/Manucure", Manucure)
 http.HandleFunc("/Institut de beauté", helloWorldPage)
 
 // Démarrer le serveur sur le port 8080
