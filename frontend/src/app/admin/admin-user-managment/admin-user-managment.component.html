@@ -1,1 +1,33 @@
-<p>admin-user-managment works!</p>
+<div class="admin-user-management container mt-4">
+    <h2>User Management</h2>
+  
+    <!-- Responsive Table -->
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Role</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users">
+            <td>{{ user.id }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.role }}</td>
+            <td>
+              <!-- Action Buttons -->
+              <button class="btn btn-primary btn-sm mr-2" (click)="editUser(user.id)">Edit</button>
+              <button class="btn btn-danger btn-sm mr-2" (click)="deleteUser(user.id)">Delete</button>
+              <button class="btn btn-secondary btn-sm" (click)="resetPassword(user.id)">Reset Password</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
