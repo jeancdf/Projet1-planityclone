@@ -9,7 +9,7 @@ type RoleType string
 
 const (
     AdminRole    RoleType = "admin"
-    CustomerRole RoleType = "customer"
+    SalonRole RoleType = "salon"
     ClientRole   RoleType = "client"
 )
 
