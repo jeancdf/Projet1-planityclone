@@ -90,7 +90,7 @@ func Login(c *gin.Context) {
 	var user userModels.User
 	var userLogin userModels.User
 	c.BindJSON(&userLogin)
-	db.Where("email = ?", userLogin.Email).First(&user)
+	db.Where("username = ?", userLogin.Username).First(&user)
 	if user.ID == 0 {
 			c.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
 			return
