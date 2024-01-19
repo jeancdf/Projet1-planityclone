@@ -10,14 +10,14 @@ import { AppointmentBookingComponent } from './client/appointment-booking/appoin
 import { SalonListComponent } from './client/salon-list/salon-list.component';
 import { SalonProfileComponent } from './salon/salon-profile/salon-profile.component';
 import { SalonSlotManagementComponent } from './salon/salon-slot-management/salon-slot-management.component';
-
-
+import { SignupComponent } from './signup/signup.component';
 
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'salonlist', component : SalonListComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'signup', component: SignupComponent},
   { path: 'admin-dashboard', component: AdminDashboardComponent},
   { path: 'admin-user-managment', component: AdminUserManagmentComponent },
   { path: 'client-dashboard', component: ClientDashboardComponent },

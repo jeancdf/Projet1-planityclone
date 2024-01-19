@@ -26,6 +26,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
 import { AdminAnalyticsComponent } from './admin/admin-analytics/admin-analytics.component';
+import { SignupComponent } from './signup/signup.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { AdminAnalyticsComponent } from './admin/admin-analytics/admin-analytics
     AppointmentBookingComponent,
     AdminDashboardComponent,
     AdminUserManagmentComponent,
-    AdminAnalyticsComponent
+    AdminAnalyticsComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,

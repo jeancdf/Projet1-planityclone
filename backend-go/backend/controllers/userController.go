@@ -28,12 +28,12 @@ func CreateUser(c *gin.Context) {
 			return
 	}
 
-	validRoles := []string{"customer", "client"}
+	validRoles := []string{"salon", "client"}
 	roles := strings.Split(user.Roles, ",") 
 
 	for _, role := range roles {
 			if !authHelper.Contains(validRoles, role) {
-					c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid Role. Allowed roles are customer or client"})
+					c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid Role. Allowed roles are salon or client"})
 					return
 			}
 	}
