@@ -11,8 +11,8 @@ import (
 func GetSalons(c *gin.Context){
 	db := database.Db
 	var salons []userModels.Salon
-	db.Find($salons)
-	c.JSON(http.StatusOk, gin.H{"data": salons})
+	db.Find(&salons)
+	c.JSON(http.StatusOK, gin.H{"data": salons})
 }
 
 func CreateSalon(c *gin.Context){
@@ -57,7 +57,7 @@ func UpdateSalon(c *gin.Context){
 func DeleteSalon(c *gin.Context) {
 	db := database.Db
 	id := c.Params.ByName("id")
-	var salon models.Salon
+	var salon userModels.Salon
 	db.First(&salon, id)
 	if salon.ID != 0 {
 		db.Delete(&salon)
@@ -70,7 +70,7 @@ func DeleteSalon(c *gin.Context) {
 func GetSalon(c *gin.Context) {
 	db := database.Db
 	id := c.Params.ByName("id")
-	var salon models.Salon
+	var salon userModels.Salon
 	db.First(&salon, id)
 	c.JSON(http.StatusOK, gin.H{"data": salon})
 }
