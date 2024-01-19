@@ -21,12 +21,3 @@ type User struct {
 	Roles     string     `gorm:"type:varchar(255);not null" json:"roles"`
 	CreatedAt time.Time   `gorm:"default:CURRENT_TIMESTAMP" json:"created_at"`
 }
-
-type Salon struct {
-	gorm.Model 
-	ID uint	
-	Name	string
-	Description	string
-	Adresse	string
-	Horaires	int
-}
