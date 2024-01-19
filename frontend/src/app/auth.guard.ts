@@ -15,7 +15,7 @@ export class AuthGuard implements CanActivate {
       state: RouterStateSnapshot
     ): boolean {
       const token = localStorage.getItem('token'); // Get the auth token from localStorage
-      const userRole = localStorage.getItem('role'); // Get the user's role
+      const userRole = localStorage.getItem('userRoles'); // Get the user's role
 
       console.log('User Role:', userRole);
 

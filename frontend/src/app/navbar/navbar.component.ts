@@ -52,19 +52,19 @@ export class NavbarComponent {
 
   // Example: Check if the user is a student
   isSalon(): boolean {
-    const userRole = localStorage.getItem("userRole");
+    const userRole = localStorage.getItem("userRoles");
     return userRole === "salon";
   }
 
   // Example: Check if the user is an admin
   isAdmin(): boolean {
-    const userRole = localStorage.getItem("userRole");
+    const userRole = localStorage.getItem("userRoles");
     return userRole === "admin";
   }
 
   // Example: Check if the user is a teacher
   isClient(): boolean {
-    const userRole = localStorage.getItem("userRole");
+    const userRole = localStorage.getItem("userRoles");
     return userRole === "client";
   }
 
