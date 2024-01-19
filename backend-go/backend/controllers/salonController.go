@@ -54,4 +54,15 @@ func UpdateSalon(c *gin.Context){
 	}
 }
 
-func DeleteSalon(){}
+func DeleteSalon(c *gin.Context) {
+	db := database.Db
+	id := c.Params.ByName("id")
+	var salon models.Salon
+	db.First(&salon, id)
+	if salon.ID != 0 {
+		db.Delete(&salon)
+		c.JSON(http.StatusOK, gin.H{"data": true})
+	} else {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Salon not found"})
+	}
+}
