@@ -18,39 +18,35 @@ export class AuthService {
     this.isLoggedIn = false;
   }
 
-  login(username: string, password: string): Observable<any> {
-    return this.http.post(`${AUTH_API}accounts/login/`, {
+  register(username: string, email: string, password: string, roles: string): Observable<any> {
+    return this.http.post(`${AUTH_API}register`, {
       username: username,
+      email: email,
       password: password,
+      roles: roles
+    }, httpOptions);
+  }
+
+  login(username: string, password: string): Observable<any> {
+    return this.http.post(`${AUTH_API}login`, {
+      username: username,
+      password: password
     }, httpOptions)
       .pipe(
         tap((response: any) => {
-          if (response && response.access) {
-            // Save the token in local storage
-            localStorage.setItem('token', response.access);
-            this.isLoggedIn = true;
-
-            // Save the role in local storage, assuming it's included in the response
-            if (response.role) {
-              localStorage.setItem('role', response.role);
-            }
-
-            // Save the teacher ID in local storage, assuming it's included in the response
-            if (response.id) {
-              localStorage.setItem('id', response.id);
-            }
-
-            // save the username in local storage, assuming it's included in the response
-            if (response.username) {
-              localStorage.setItem('username', response.username);
-            }
+          if (response && response.token) {
+            this.storeTokenAndSetLoggedIn(response.token);
           }
         })
       );
   }
 
-  // Method to retrieve the current teacher's ID
   getCurrentId(): string | null {
     return localStorage.getItem('id');
+  }
+
+  private storeTokenAndSetLoggedIn(token: string) {
+    localStorage.setItem('token', token);
+    this.isLoggedIn = true;
   }
 }
