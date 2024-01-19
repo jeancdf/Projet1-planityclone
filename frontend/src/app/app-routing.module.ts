@@ -17,6 +17,7 @@ const routes: Routes = [
 { path: '', redirectTo: 'login', pathMatch: 'full' },
 { path: 'home', component : SalonListComponent , canActivate: [AuthGuard], data: { role: 'client' }},
 { path: 'login', component: LoginComponent },
+{ path: 'signup', component: SignupComponent },
 { path: 'admin-dashboard', component: AdminDashboardComponent, canActivate: [AuthGuard], data: { role: 'admin' } },
 { path: 'admin-user-managment', component: AdminUserManagmentComponent, canActivate: [AuthGuard], data: { role: 'admin' } },
 { path: 'client-dashboard', component: ClientDashboardComponent, canActivate: [AuthGuard], data: { role: 'client' } },
