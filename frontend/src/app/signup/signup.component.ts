@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-signup',
@@ -21,12 +21,15 @@ export class SignupComponent implements OnInit {
   }
 
   onSignUp() {
-    this.http.post('/api/accounts/register/', {
+    const headers = new HttpHeaders().set('Content-Type', 'application/json'); // Set the content type to application/json
+    const body = JSON.stringify({ // Convert the data to a JSON string
       email: this.email,
       username: this.username,
       password: this.password,
-      role: this.role.toLowerCase()
-    }).subscribe(response => {
+      roles: this.role.toLowerCase()
+    });
+  
+    this.http.post('/api/register/', body, { headers: headers }).subscribe(response => {
       // If the sign-up was successful, display a success message and navigate to the login page after a short delay
       this.successMessage = "Signup successful! Redirecting to login...";
       setTimeout(() => {
@@ -48,6 +51,7 @@ export class SignupComponent implements OnInit {
       }
     });
   }
+  
   
   
   
