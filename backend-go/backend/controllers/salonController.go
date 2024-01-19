@@ -66,3 +66,11 @@ func DeleteSalon(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Salon not found"})
 	}
 }
+
+func GetSalon(c *gin.Context) {
+	db := database.Db
+	id := c.Params.ByName("id")
+	var salon models.Salon
+	db.First(&salon, id)
+	c.JSON(http.StatusOK, gin.H{"data": salon})
+}
