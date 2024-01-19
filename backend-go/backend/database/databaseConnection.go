@@ -36,7 +36,7 @@ func Dbinstance() *gorm.DB {
 var Db = Dbinstance()
 
 func DbMigrate(db *gorm.DB) {
-	db.AutoMigrate(&userModels.User{})
+	db.AutoMigrate(&userModels.User{}, &userModels.Salon{}, &userModels.Reservation{})
 }
 
 func CloseDb(db *gorm.DB) {

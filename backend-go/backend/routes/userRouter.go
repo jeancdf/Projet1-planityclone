@@ -7,7 +7,10 @@ import (
 )
 
 func UsersRouter(r *gin.Engine) {
-	r.Use(authMiddleware.AuthMiddleware())
-	r.POST("/users", controller.CreateUser)
-	r.GET("/users/:id", controller.GetUser)
+	authGroup := r.Group("/api")
+	authGroup.Use(authMiddleware.AuthMiddleware())
+	{
+		authGroup.POST("/users", controller.CreateUser)
+		authGroup.POST("/users/:id", controller.GetUser)
+	}
 }
