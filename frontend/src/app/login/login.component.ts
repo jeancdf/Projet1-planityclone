@@ -30,12 +30,13 @@ export class LoginComponent {
   onSubmit(): void {
     this.authService.login(this.username, this.password).subscribe(
       data => {
-        if (data.access) {
-          const accessToken = data.access;
-          const userRole = data.role; // Assuming the role is part of the response
+        if (data) {
+          const accessToken = data.token;
+          const userRole = data.roles; // Assuming the role is part of the response$
+          console.log('User Roles:', userRole);
 
           this.tokenStorageService.saveToken(accessToken);
-          localStorage.setItem('userRole', userRole);
+          localStorage.setItem('userRoles', userRole);
 
           this.isLoggedIn = true;
 

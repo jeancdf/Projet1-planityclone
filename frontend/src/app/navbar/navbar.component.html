@@ -1,11 +1,11 @@
-<!-- <div id="app" class="fix" *ngIf="isLogged()">
+<div id="app" class="fix" *ngIf="isLogged()">
     <nav class="navbar navbar-expand navbar-dark bg-dark p-2 ">
       <a class="navbar-brand ">InstantCoiffure</a>
   
   
       <!-- ADMIN -->
   
-      <!-- <ul class="navbar-nav mr-auto" routerLinkActive="active" *ngIf="isAdmin()">
+ <ul class="navbar-nav mr-auto" routerLinkActive="active" *ngIf="isAdmin()">
         <li class="nav-item">
           <a class="nav-link" routerLink="admin-dashboard">admin home</a>
         <li ngbDropdown class="nav-item">
@@ -19,12 +19,12 @@
         <li class="nav-item" style="transform: translateX(30vw);">
           <a href class="nav-link" (click)="logout()">Log-Out</a>
         </li>
-      </ul> -->
+      </ul> 
   
   
       <!-- SALON -->
   
-      <!-- <ul class="navbar-nav ml-5" *ngIf="isSalon()">
+    <ul class="navbar-nav ml-5" *ngIf="isSalon()">
         <li class="navbar-nav">
           <a class="nav-link" routerLink="salon-dashboard">Dashboard</a>
         </li>
@@ -42,12 +42,12 @@
         <li class="nav-item" style="transform: translateX(20vw);">
           <a href class="nav-link" (click)="logout()">Log-Out</a>
         </li>
-      </ul> -->
+      </ul> 
   
   
       <!-- ClIENT -->
   
-      <!-- <ul class="navbar-nav ml-5" *ngIf="isClient()">
+   <ul class="navbar-nav ml-5" *ngIf="isClient()">
         <li class="navbar-nav">
           <a class="nav-link" routerLink="client-dashboard">home Client</a>
         </li>
@@ -70,10 +70,10 @@
   
     </nav>
   
-  </div> -->
+  </div> 
   
   <!-- Navbar for unauthenticated users -->
-  <!-- <nav class="navbar navbar-expand navbar-dark bg-dark p-2"  >
+  <nav class="navbar navbar-expand navbar-dark bg-dark p-2" *ngIf="isNotLogged()" >
     <a class="navbar-brand">Welcome</a>
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
@@ -84,17 +84,17 @@
       </li>
       <li class="nav-item">
         <a class="nav-link" routerLink="login">Login</a>
-      </li> -->
-      <!-- <li class="nav-item">
+      </li> 
+      <li class="nav-item">
         <a class="nav-link" routerLink="signup">Signup</a>
-      </li> -->
-    <!-- </ul>
-  </nav> -->
+      </li>
+   </ul>
+  </nav>
   
 
 
    <!-- app.component.html -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">App Name</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -130,6 +130,6 @@
         </li>
       </ul>
     </div>
-  </nav>
+  </nav> -->
   <router-outlet></router-outlet>
   
