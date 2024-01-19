@@ -8,7 +8,12 @@ import (
 	"backend/backend/models"
 )
 
-func GeSalons(){}
+func GetSalons(c *gin.Context){
+	db := database.Db
+	var salons []models.Salon
+	db.Find($salons)
+	c.JSON(http.StatusOk, gin.H{"data": salons})
+}
 
 func CreateSalon(){}
 
