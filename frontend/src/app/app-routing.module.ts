@@ -25,6 +25,7 @@ const routes: Routes = [
 { path: 'salon-profile', component: SalonProfileComponent, canActivate: [AuthGuard], data: { role: 'salon' } },
 { path: 'salon-slot-management', component: SalonSlotManagementComponent, canActivate: [AuthGuard], data: { role: 'salon' } },
 { path: 'appointment-booking', component: AppointmentBookingComponent, canActivate: [AuthGuard], data: { role: 'client' } },
+{ path: 'appointment-booking/:id', component: AppointmentBookingComponent, canActivate: [AuthGuard], data: { role: 'client' } },
 { path: 'salonlist', component: SalonListComponent, canActivate: [AuthGuard], data: { role: 'client' } },
 ];
 
