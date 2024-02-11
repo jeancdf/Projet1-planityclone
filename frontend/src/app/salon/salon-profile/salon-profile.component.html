@@ -1,51 +1,45 @@
 <div class="salon-profile container mt-4">
-    <!-- Salon Name -->
-    <h2 *ngIf="!editMode">{{ salon.name }}</h2>
-    <input *ngIf="editMode" type="text" [(ngModel)]="salon.name" class="form-control mb-2" placeholder="Salon Name">
-  
-    <!-- Salon Description -->
-    <p *ngIf="!editMode">{{ salon.description }}</p>
-    <textarea *ngIf="editMode" [(ngModel)]="salon.description" class="form-control mb-2" placeholder="Salon Description"></textarea>
-  
-    <!-- Services Offered -->
-    <h3 *ngIf="!editMode">Services Offered</h3>
-    <div *ngIf="editMode">
-      <h3>Edit Services</h3>
-      <div *ngFor="let service of salon.services; let i = index">
-        <input type="text" [(ngModel)]="salon.services[i].name" class="form-control mb-1" placeholder="Service Name">
-        <input type="number" [(ngModel)]="salon.services[i].price" class="form-control mb-2" placeholder="Service Price">
-      </div>
-    </div>
-    <ul *ngIf="!editMode">
-      <li *ngFor="let service of salon.services">{{ service.name }} - ${{ service.price }}</li>
-    </ul>
-  
-    <!-- Staff Members -->
-    <h3 *ngIf="!editMode">Our Staff</h3>
-    <div *ngIf="editMode">
-      <h3>Edit Staff</h3>
-      <div *ngFor="let member of salon.staff; let i = index">
-        <input type="text" [(ngModel)]="salon.staff[i].name" class="form-control mb-1" placeholder="Staff Name">
-        <input type="text" [(ngModel)]="salon.staff[i].title" class="form-control mb-2" placeholder="Staff Title">
-      </div>
-    </div>
-    <ul *ngIf="!editMode">
-      <li *ngFor="let member of salon.staff">{{ member.name }} - {{ member.title }}</li>
-    </ul>
-  
-    <!-- Operating Hours and Location -->
-    <h3 *ngIf="!editMode">Operating Hours</h3>
-    <input *ngIf="editMode" type="text" [(ngModel)]="salon.hours" class="form-control mb-2" placeholder="Operating Hours">
-    <p *ngIf="!editMode">{{ salon.hours }}</p>
-  
-    <h3 *ngIf="!editMode">Location</h3>
-    <input *ngIf="editMode" type="text" [(ngModel)]="salon.location" class="form-control mb-2" placeholder="Location">
-    <p *ngIf="!editMode">{{ salon.location }}</p>
-  
-    <!-- Edit/Save Buttons -->
-    <button class="btn btn-secondary mb-2" (click)="toggleEditMode()">
-      {{ editMode ? 'Cancel' : 'Edit Profile' }}
-    </button>
-    <button *ngIf="editMode" class="btn btn-primary mb-2" (click)="saveProfile()">Save Changes</button>
+  <!-- Salon Name -->
+  <h2 *ngIf="!editMode">{{ salon.name }}</h2>
+  <input *ngIf="editMode" type="text" [(ngModel)]="salon.name" class="form-control mb-2" placeholder="Salon Name">
+
+  <!-- Salon Email -->
+  <p *ngIf="!editMode">Email: {{ salon.email }}</p>
+  <input *ngIf="editMode" type="email" [(ngModel)]="salon.email" class="form-control mb-2" placeholder="Salon Email">
+
+  <!-- Salon Phone -->
+  <p *ngIf="!editMode">Phone: {{ salon.phone }}</p>
+  <input *ngIf="editMode" type="tel" [(ngModel)]="salon.phone" class="form-control mb-2" placeholder="Salon Phone">
+
+  <!-- Salon Address -->
+  <p *ngIf="!editMode">Address: {{ salon.address }}</p>
+  <input *ngIf="editMode" type="text" [(ngModel)]="salon.address" class="form-control mb-2" placeholder="Salon Address">
+
+  <!-- Salon Description -->
+  <p *ngIf="!editMode">{{ salon.description }}</p>
+  <textarea *ngIf="editMode" [(ngModel)]="salon.description" class="form-control mb-2" placeholder="Salon Description"></textarea>
+
+  <!-- Services Offered -->
+  <h3 *ngIf="!editMode">Services Offered</h3>
+  <div *ngIf="editMode">
+    <h3>Edit Services</h3>
+    <ng-select [items]="availableServices"
+               bindLabel="name"
+               bindValue="id"
+               [(ngModel)]="selectedServiceIds"
+               [multiple]="true"
+               placeholder="Select services"
+               class="form-control mb-2">
+    </ng-select>
   </div>
-  
+  <ul *ngIf="!editMode">
+    <li *ngFor="let service of salon.services">{{ service.name }} - ${{ service.price }}</li>
+  </ul>
+
+
+  <!-- Edit/Save Buttons -->
+  <button class="btn btn-secondary mb-2" (click)="toggleEditMode()">
+    {{ editMode ? 'Cancel' : 'Edit Profile' }}
+  </button>
+  <button *ngIf="editMode" class="btn btn-primary mb-2" (click)="saveProfile()">Save Changes</button>
+</div>

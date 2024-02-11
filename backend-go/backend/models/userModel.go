@@ -1,6 +1,7 @@
 package userModels
 
 import (
+	"crypto/des"
 	"time"
 )
 
@@ -31,6 +32,7 @@ type Salon struct {
 	Address   string    `gorm:"size:255;not null;" json:"address"`
 	Phone     string    `gorm:"size:255;not null;" json:"phone"`
 	service   []Service `gorm:"foreignKey:SalonID" json:"service"`
+	description string `gorm:"size:255;not null;" json:"description"`
 }
 
 type Reservation struct {

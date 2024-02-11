@@ -68,11 +68,27 @@ export class DataService {
     );
   }
 
+  fetchAllServices(): Observable<any> {
+    return this.getHttpOptions().pipe(
+      switchMap(options =>
+        this.http.get(`/api/services`, options)
+      )
+    );
+  }
+
   fetchAvailableTimeSlots(salonId: string, date: Date): Observable<any> {
     const dateString = date.toISOString().split('T')[0];
     return this.getHttpOptions().pipe(
       switchMap(options =>
         this.http.get(`/api/salons/${salonId}/available-slots?date=${dateString}`, options)
+      )
+    );
+  }
+
+  fetchSalonProfile(salonId: string): Observable<any> {
+    return this.getHttpOptions().pipe(
+      switchMap(options =>
+        this.http.get(`/api/salons/${salonId}`, options)
       )
     );
   }
