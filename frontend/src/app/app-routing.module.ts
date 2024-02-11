@@ -11,6 +11,8 @@ import { SalonListComponent } from './client/salon-list/salon-list.component';
 import { SalonProfileComponent } from './salon/salon-profile/salon-profile.component';
 import { SalonSlotManagementComponent } from './salon/salon-slot-management/salon-slot-management.component';
 import { SignupComponent } from './signup/signup.component';
+import { SalonServicesComponent } from './salon/salon-services/salon-services.component';
+import { SalonClientListComponent } from './salon/salon-client-list/salon-client-list.component';
 
 
 const routes: Routes = [
@@ -24,9 +26,12 @@ const routes: Routes = [
 { path: 'salon-dashboard', component: SalonDashboardComponent, canActivate: [AuthGuard], data: { role: 'salon' } },
 { path: 'salon-profile', component: SalonProfileComponent, canActivate: [AuthGuard], data: { role: 'salon' } },
 { path: 'salon-slot-management', component: SalonSlotManagementComponent, canActivate: [AuthGuard], data: { role: 'salon' } },
+{ path: 'salon-client-list', component: SalonClientListComponent, canActivate: [AuthGuard], data: { role: 'salon' } },
+{ path: 'salonlist', component: SalonListComponent, canActivate: [AuthGuard], data: { role: 'client' } },
+{ path: 'salon-services', component: SalonServicesComponent, canActivate: [AuthGuard ], data: { role: 'salon' } },
 { path: 'appointment-booking', component: AppointmentBookingComponent, canActivate: [AuthGuard], data: { role: 'client' } },
 { path: 'appointment-booking/:id', component: AppointmentBookingComponent, canActivate: [AuthGuard], data: { role: 'client' } },
-{ path: 'salonlist', component: SalonListComponent, canActivate: [AuthGuard], data: { role: 'client' } },
+
 ];
 
 @NgModule({

@@ -27,6 +27,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
 import { AdminAnalyticsComponent } from './admin/admin-analytics/admin-analytics.component';
 import { SignupComponent } from './signup/signup.component';
+import { SalonServicesComponent } from './salon/salon-services/salon-services.component';
+import { SalonClientListComponent } from './salon/salon-client-list/salon-client-list.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,9 @@ import { SignupComponent } from './signup/signup.component';
     AdminDashboardComponent,
     AdminUserManagmentComponent,
     AdminAnalyticsComponent,
-    SignupComponent
+    SignupComponent,
+    SalonServicesComponent,
+    SalonClientListComponent
   ],
   imports: [
     BrowserModule,

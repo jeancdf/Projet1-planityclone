@@ -1,30 +1,35 @@
 <div class="salon-dashboard container mt-4">
-    <h2>Salon Dashboard</h2>
-  
-    <!-- Booking Management Section -->
-    <div class="booking-management mt-4">
-      <h3>Booking Management</h3>
-      <!-- Placeholder for booking table or list -->
-      <p>List of bookings goes here...</p>
-      <!-- You can add a table similar to the user management component to list bookings -->
-    </div>
-  
-    <!-- Salon Profile Section -->
-    <div class="salon-profile mt-4">
-      <h3>Salon Profile</h3>
-      <form>
-        <!-- Form fields for salon profile -->
-        <div class="form-group">
-          <label for="salonName">Salon Name</label>
-          <input type="text" class="form-control" id="salonName" placeholder="Enter salon name">
-        </div>
-        <div class="form-group">
-          <label for="salonAddress">Address</label>
-          <input type="text" class="form-control" id="salonAddress" placeholder="Enter address">
-        </div>
-        <!-- Add more fields as required -->
-        <button type="submit" class="btn btn-primary">Update Profile</button>
-      </form>
-    </div>
-  </div>
-  
+  <h2>Salon Dashboard</h2>
+
+  <!-- Services Card -->
+  <mat-card class="dashboard-card mt-4 p-3">
+    <mat-card-title [routerLink]="['/salon-services']" style="cursor: pointer;">Services Offered</mat-card-title>
+    <mat-card-content>
+      <p>List of services goes here...</p>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Client List Card -->
+  <mat-card class="dashboard-card mt-4 p-3">
+    <mat-card-title [routerLink]="['/salon-client-list']" style="cursor: pointer;">Client List</mat-card-title>
+    <mat-card-content>
+      <p>List of clients goes here...</p>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Salon Profile Card -->
+  <mat-card class="dashboard-card mt-4 p-3">
+    <mat-card-title [routerLink]="['/salon-profile']" style="cursor: pointer;">Salon Profile</mat-card-title>
+    <mat-card-content>
+      <p>Salon profile details go here...</p>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Salon Slot Management Card -->
+  <mat-card class="dashboard-card mt-4 p-3">
+    <mat-card-title [routerLink]="['/salon-slot-management']" style="cursor: pointer;">Salon Slot Management</mat-card-title>
+    <mat-card-content>
+      <p>Salon slot management details go here...</p>
+    </mat-card-content>
+  </mat-card>
+</div>
