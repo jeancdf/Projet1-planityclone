@@ -22,6 +22,11 @@ func GetSalons(c *gin.Context) {
 
 func CreateSalon(c *gin.Context) {
 	db := database.Db
+	user_id, exists := c.Get("userID")
+	if !exists {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+		return
+	}
 	var salon models.Salon
 
 	c.BindJSON(&salon)
@@ -29,7 +34,7 @@ func CreateSalon(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Name, Email, Address, and Phone are required"})
 		return
 	}
-
+	salon.UserID = user_id.(uint)
 	db.Create(&salon)
 	c.JSON(http.StatusOK, gin.H{"data": salon})
 }
@@ -73,4 +78,19 @@ func GetSalon(c *gin.Context) {
 	var salon userModels.Salon
 	db.First(&salon, id)
 	c.JSON(http.StatusOK, gin.H{"data": salon})
+}
+
+func GetMySalons(c *gin.Context) {
+	db := database.Db
+	userID, exists := c.Get("userID")
+	if !exists {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+		return
+	}
+	var salons []models.Salon
+	if err := db.Where("user_id = ?", userID).Find(&salons).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": salons})
 }

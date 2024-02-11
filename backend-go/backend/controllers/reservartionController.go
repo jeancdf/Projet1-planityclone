@@ -88,6 +88,22 @@ func DeleteReservation(c *gin.Context) {
 	}
 }
 
+func GetSalonReservations(c *gin.Context) {
+	db := database.Db
+	salonID, _ := strconv.ParseUint(c.Param("salonId"), 10, 32)
+	var salon models.Salon
+	if err := db.First(&salon, salonID).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Salon not found"})
+		return
+	}
+	var reservations []models.Reservation
+	if err := db.Where("salon_id = ?", salonID).Find(&reservations).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": reservations})
+}
+
 func AcceptReservation(c *gin.Context) {
 	db := database.Db
 	salonID, _ := strconv.ParseUint(c.Param("salonId"), 10, 32)

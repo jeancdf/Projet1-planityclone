@@ -17,6 +17,7 @@ func ReservationRouter(r *gin.Engine) {
 	authGroup.GET("/reservations/:reservationId", controller.GetReservation)
 	authGroup.PUT("/reservations/:reservationId", controller.UpdateReservation)
 	authGroup.DELETE("/reservations/:reservationId", controller.DeleteReservation)
+	authGroup.GET("/salons/:salonId/reservations", controller.GetSalonReservations)
 
 	// Specific routes for accepting and declining reservations
 	authGroup.PUT("/salons/:salonId/reservations/:reservationId/accept", controller.AcceptReservation)

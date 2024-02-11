@@ -17,4 +17,7 @@ func SalonRouter(r *gin.Engine) {
 	authGroup.GET("/salons/:salonId", controller.GetSalon)
 	authGroup.PUT("/salons/:salonId", controller.UpdateSalon)
 	authGroup.DELETE("/salons/:salonId", controller.DeleteSalon)
+
+	// get my salons
+	authGroup.GET("/my-salons", controller.GetMySalons)
 }
