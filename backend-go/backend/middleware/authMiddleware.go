@@ -14,9 +14,9 @@ var jwtKey = []byte("so_secret_key")
 
 type Claims struct {
 	UserID uint
-	Role   string
 	jwt.StandardClaims
 }
+
 func GenerateToken(userID uint) (string, error) {
 	expirationTime := time.Now().Add(24 * time.Hour)
 	claims := &Claims{
@@ -65,27 +65,20 @@ func AuthMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		token, err := TokenValid(c.Request)
 		if err != nil {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized hhh"})
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
 			c.Abort()
 			return
 		}
 
-		claims, ok := token.Claims.(*Claims)
-		if !ok || !token.Valid {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized token"})
+		if claims, ok := token.Claims.(*Claims); ok && token.Valid {
+			c.Set("userID", claims.UserID)
+		} else {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
 			c.Abort()
 			return
 		}
 
-		// Check if the role is what you require, e.g., "admin"
-		if claims.Role != "admin" {
-			c.JSON(http.StatusForbidden, gin.H{"error": "Insufficient permissions"})
-			c.Abort()
-			return
-		}
-
-		fmt.Printf("User %d is authenticated with role %s\n", claims.UserID, claims.Role)
-		c.Set("userID", claims.UserID)
+		fmt.Println("User is authenticated")
 		c.Next()
 	}
 }
