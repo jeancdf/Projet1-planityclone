@@ -60,6 +60,23 @@ export class DataService {
     );
   }
 
+  fetchServices(salonId: string): Observable<any> {
+    return this.getHttpOptions().pipe(
+      switchMap(options =>
+        this.http.get(`/api/salons/${salonId}/services`, options)
+      )
+    );
+  }
+
+  fetchAvailableTimeSlots(salonId: string, date: Date): Observable<any> {
+    const dateString = date.toISOString().split('T')[0];
+    return this.getHttpOptions().pipe(
+      switchMap(options =>
+        this.http.get(`/api/salons/${salonId}/available-slots?date=${dateString}`, options)
+      )
+    );
+  }
+
 
   // Add any other methods here, and use getAuthHeaders() to include the token in the headers
 }
