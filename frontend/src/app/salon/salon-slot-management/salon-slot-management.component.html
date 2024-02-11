@@ -1,1 +1,18 @@
-<p>salon-slot-management works!</p>
+<div class="container">
+    <h2>Manage Salon Slots</h2>
+    <div class="mb-3">
+      <input type="text" class="form-control" [(ngModel)]="newSlotTime" placeholder="HH:MM AM/PM">
+      <button class="btn btn-success mt-2" (click)="addSlot()">Add New Slot</button>
+    </div>
+    <ul class="list-group">
+      <li *ngFor="let slot of slots" class="list-group-item">
+        Time: {{slot.time}}
+        <span class="mx-4">Booked by: {{slot.clientUsername}}</span>
+
+        <button class="btn btn-danger ml-auto" (click)="slot.id !== undefined ? removeSlot(slot.id) : null">Remove</button>
+
+        <!-- Optional: Add button to toggle booking status -->
+      </li>
+    </ul>
+  </div>
+  
