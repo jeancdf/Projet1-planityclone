@@ -8,16 +8,30 @@ import { HttpClient } from '@angular/common/http';
 })
 export class AppointmentBookingComponent {
   selectedDate!: Date;
+  selectedService!: string; // Added for service selection
   selectedTimeSlot!: string;
-  timeSlots!: string[]; // Now this will be populated from the API
-  salonId: string = '12345'; // Example salon ID, should be set based on user selection
+  services!: any[]; // Assuming services have an id and name
+  timeSlots!: string[];
+  salonId: string = '12345'; // Example salon ID
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.fetchServices(); // Fetch services on component initialization
+  }
 
   onDateChange() {
     if (this.selectedDate) {
       this.fetchAvailableTimeSlots(this.selectedDate);
     }
+  }
+
+  fetchServices() {
+    // Fetch services from the backend
+    this.http.get<any[]>(`/api/salons/${this.salonId}/services`)
+      .subscribe(services => {
+        this.services = services;
+      }, error => {
+        console.error('Error fetching services', error);
+      });
   }
 
   fetchAvailableTimeSlots(date: Date) {
@@ -32,7 +46,7 @@ export class AppointmentBookingComponent {
 
   onSubmit() {
     // Process the booking here
-    console.log(`Date: ${this.selectedDate}, Time Slot: ${this.selectedTimeSlot}`);
-    // Add logic to communicate with the backend
+    console.log(`Date: ${this.selectedDate}, Service: ${this.selectedService}, Time Slot: ${this.selectedTimeSlot}`);
+    // Add logic to communicate with the backend for booking
   }
 }
