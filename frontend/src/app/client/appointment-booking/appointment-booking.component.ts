@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router'; 
+import { DataService } from '../../service/data.service'; 
 
 
 @Component({
@@ -14,14 +15,22 @@ export class AppointmentBookingComponent {
   selectedTimeSlot!: string;
   services!: any[]; 
   timeSlots!: string[];
-  salonId: string = '';
-
-  constructor(private http: HttpClient, private route: ActivatedRoute) {
-    this.route.paramMap.subscribe(params => {
-      this.salonId = params.get('salonId') || 'defaultSalonId';
-      this.fetchServices();
-    });
+  salonId: any;
+  
+  constructor( private dataService: DataService, private http: HttpClient, private route: ActivatedRoute) {
+     
+   
   }
+
+  ngOnInit() {
+    this.route.paramMap.subscribe(params => {
+      console.log(params)
+      this.salonId = params.get('id');
+      console.log('Salon ID:', this.salonId);
+    });
+    this.fetchServices();
+  }
+
   onDateChange() {
     if (this.selectedDate) {
       this.fetchAvailableTimeSlots(this.selectedDate);
@@ -29,9 +38,8 @@ export class AppointmentBookingComponent {
   }
 
   fetchServices() {
-    // Fetch services from the backend
-    this.http.get<any[]>(`/api/salons/${this.salonId}/services`)
-      .subscribe(services => {
+    this.dataService.fetchServices(this.salonId).subscribe(
+      services => {
         this.services = services;
       }, error => {
         console.error('Error fetching services', error);
@@ -39,9 +47,9 @@ export class AppointmentBookingComponent {
   }
 
   fetchAvailableTimeSlots(date: Date) {
-    const dateString = date.toISOString().split('T')[0]; 
-    this.http.get<string[]>(`/api/salons/${this.salonId}/available-slots?date=${dateString}`)
-      .subscribe(slots => {
+    const dateString = new Date (date.toISOString().split('T')[0])
+    this.dataService.fetchAvailableTimeSlots(this.salonId, dateString).subscribe(
+      slots => {
         this.timeSlots = slots;
       }, error => {
         console.error('Error fetching time slots', error);
