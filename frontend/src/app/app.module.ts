@@ -29,6 +29,8 @@ import { AdminAnalyticsComponent } from './admin/admin-analytics/admin-analytics
 import { SignupComponent } from './signup/signup.component';
 import { SalonServicesComponent } from './salon/salon-services/salon-services.component';
 import { SalonClientListComponent } from './salon/salon-client-list/salon-client-list.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+
 
 @NgModule({
   declarations: [
@@ -60,7 +62,8 @@ import { SalonClientListComponent } from './salon/salon-client-list/salon-client
     MatSelectModule,
     MatCardModule,
     MatButtonModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    NgSelectModule,
   ],
   providers: [
     AuthGuard,
