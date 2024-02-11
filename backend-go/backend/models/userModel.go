@@ -4,22 +4,21 @@ import (
 	"time"
 )
 
-
 type RoleType string
 
 const (
-    AdminRole    RoleType = "admin"
-    SalonRole RoleType = "salon"
-    ClientRole   RoleType = "client"
+	AdminRole  RoleType = "admin"
+	SalonRole  RoleType = "salon"
+	ClientRole RoleType = "client"
 )
 
 type User struct {
-	ID        uint        `gorm:"primary_key;auto_increment" json:"id"`
-	Username  string      `gorm:"size:255;not null;unique" json:"username"`
-	Email     string      `gorm:"size:100;not null;unique" json:"email"`
-	Password  string      `gorm:"size:100;not null;" json:"password"`
-	Roles     string     `gorm:"type:varchar(255);not null" json:"roles"`
-	CreatedAt time.Time   `gorm:"default:CURRENT_TIMESTAMP" json:"created_at"`
+	ID        uint      `gorm:"primary_key;auto_increment" json:"id"`
+	Username  string    `gorm:"size:255;not null;unique" json:"username"`
+	Email     string    `gorm:"size:100;not null;unique" json:"email"`
+	Password  string    `gorm:"size:100;not null;" json:"password"`
+	Roles     string    `gorm:"type:varchar(255);not null" json:"roles"`
+	CreatedAt time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"created_at"`
 }
 
 type Salon struct {
@@ -38,7 +37,7 @@ type Reservation struct {
 	ReservationDate time.Time `gorm:"not null;" json:"reservation_date"`
 	UserID          uint      `gorm:"not null" json:"user_id"`
 	SalonID         uint      `gorm:"not null" json:"salon_id"`
-	Status          *bool      `gorm:"" json:"status"`
+	Status          *bool     `gorm:"" json:"status"`
 	CreatedAt       time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"created_at"`
 	UpdatedAt       time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"updated_at"`
 }

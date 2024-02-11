@@ -1,23 +1,27 @@
 package controllers
 
 import (
+	"backend/backend/database"
+	models "backend/backend/models"
 	"net/http"
 	"time"
+
 	"github.com/gin-gonic/gin"
-	"backend/backend/database"
-	"backend/backend/models"
 )
 
-func GetSalons(c *gin.Context){
+func GetSalons(c *gin.Context) {
 	db := database.Db
-	var salons []userModels.Salon
-	db.Find($salons)
-	c.JSON(http.StatusOk, gin.H{"data": salons})
+	var salons []models.Salon
+	if err := db.Find(&salons).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": salons})
 }
 
-func CreateSalon(c *gin.Context){
+func CreateSalon(c *gin.Context) {
 	db := database.Db
-	var salon userModels.Salon
+	var salon models.Salon
 
 	c.BindJSON(&salon)
 	if salon.Name == "" || salon.Email == "" || salon.Address == "" || salon.Phone == "" {
@@ -29,29 +33,24 @@ func CreateSalon(c *gin.Context){
 	c.JSON(http.StatusOK, gin.H{"data": salon})
 }
 
-func UpdateSalon(c *gin.Context){
+func UpdateSalon(c *gin.Context) {
 	db := database.Db
-	id := c.Params.ByName("id")
-	var salon userModels.Salon
-	db.First(&salon, id)
-	if salon.ID != 0 {
-		var newSalon userModels.Salon
-		c.BindJSON(&newSalon)
-		result := userModels.Salon{
-			ID:        salon.ID,
-			Name:      newSalon.Name,
-			Email:     newSalon.Email,
-			UserID:    newSalon.UserID,
-			CreatedAt: salon.CreatedAt,
-			UpdatedAt: time.Now(),
-			Address:   newSalon.Address,
-			Phone:     newSalon.Phone,
-		}
-		db.Save(&result)
-		c.JSON(http.StatusOK, gin.H{"data": result})
-	} else {
+	id := c.Param("id")
+
+	var salon models.Salon
+	if err := db.First(&salon, id).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Salon not found"})
+		return
 	}
+
+	if err := c.BindJSON(&salon); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	salon.UpdatedAt = time.Now()
+	db.Save(&salon)
+	c.JSON(http.StatusOK, gin.H{"data": salon})
 }
 
 func DeleteSalon(c *gin.Context) {
