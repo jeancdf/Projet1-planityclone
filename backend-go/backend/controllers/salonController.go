@@ -107,16 +107,19 @@ func GetAllServices(c *gin.Context) {
 
 func GetSalonServices(c *gin.Context) {
 	db := database.Db
-	id := c.Params.ByName("salonId")
+	salonId := c.Params.ByName("salonId")
 	var salon userModels.Salon
 
-	if err := db.First(&salon, id).Error; err != nil {
+	if err := db.First(&salon, salonId).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
 		return
 	}
 
+	var serviceIDs []uint
+	db.Table("salon_service").Where("salon_id = ?", salonId).Pluck("service_id", &serviceIDs)
+
 	var services []models.Service
-	if err := db.Where("salon_id = ?", id).Find(&services).Error; err != nil {
+	if err := db.Where("id IN (?)", serviceIDs).Find(&services).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
