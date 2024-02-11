@@ -46,8 +46,7 @@ type Reservation struct {
 }
 
 type Service struct {
-	ID      uint    `gorm:"primary_key;auto_increment" json:"id"`
-	Name    string  `gorm:"size:255;not null;unique" json:"name"`
-	Price   float64 `gorm:"not null" json:"price"`
-	SalonID uint    `gorm:"not null" json:"salon_id"`
+	ID    uint    `gorm:"primary_key;auto_increment" json:"id"`
+	Name  string  `gorm:"size:255;not null;unique" json:"name"`
+	Price float64 `gorm:"not null" json:"price"`
 }
