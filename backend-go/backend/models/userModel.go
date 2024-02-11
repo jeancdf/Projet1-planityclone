@@ -1,7 +1,6 @@
 package userModels
 
 import (
-	"crypto/des"
 	"time"
 )
 
