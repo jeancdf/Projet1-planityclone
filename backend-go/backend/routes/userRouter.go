@@ -2,8 +2,9 @@ package routes
 
 import (
 	controller "backend/backend/controllers"
+	authMiddleware "backend/backend/middleware"
+
 	"github.com/gin-gonic/gin"
-	"backend/backend/middleware"
 )
 
 func UsersRouter(r *gin.Engine) {
