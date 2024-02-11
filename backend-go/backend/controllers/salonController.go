@@ -107,7 +107,7 @@ func GetAllServices(c *gin.Context) {
 
 func GetSalonServices(c *gin.Context) {
 	db := database.Db
-	id := c.Params.ByName("id")
+	id := c.Params.ByName("salonId")
 	var salon userModels.Salon
 
 	if err := db.First(&salon, id).Error; err != nil {
