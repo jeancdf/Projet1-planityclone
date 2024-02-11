@@ -50,9 +50,9 @@ func CreateReservation(c *gin.Context) {
 
 func GetReservation(c *gin.Context) {
 	db := database.Db
-	id := c.Param("id")
+	reservationID, _ := strconv.ParseUint(c.Param("reservationId"), 10, 32)
 	var reservation models.Reservation
-	if err := db.First(&reservation, id).Error; err != nil {
+	if err := db.First(&reservation, reservationID).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Reservation not found"})
 		return
 	}
@@ -61,9 +61,9 @@ func GetReservation(c *gin.Context) {
 
 func UpdateReservation(c *gin.Context) {
 	db := database.Db
-	id := c.Param("id")
+	reservationID, _ := strconv.ParseUint(c.Param("reservationId"), 10, 32)
 	var reservation models.Reservation
-	if err := db.First(&reservation, id).Error; err != nil {
+	if err := db.First(&reservation, reservationID).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Reservation not found"})
 		return
 	}
@@ -77,9 +77,9 @@ func UpdateReservation(c *gin.Context) {
 
 func DeleteReservation(c *gin.Context) {
 	db := database.Db
-	id := c.Param("id")
+	reservationID, _ := strconv.ParseUint(c.Param("reservationId"), 10, 32)
 	var reservation models.Reservation
-	db.First(&reservation, id)
+	db.First(&reservation, reservationID)
 	if reservation.ID != 0 {
 		db.Delete(&reservation)
 		c.JSON(http.StatusOK, gin.H{"data": true})
