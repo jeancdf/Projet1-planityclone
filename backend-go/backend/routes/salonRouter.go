@@ -23,4 +23,6 @@ func SalonRouter(r *gin.Engine) {
 
 	//get all services
 	authGroup.GET("/services", controller.GetAllServices)
+	// get salon services
+	authGroup.GET("/salons/:salonId/services", controller.GetSalonServices)
 }
