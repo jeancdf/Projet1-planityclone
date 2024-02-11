@@ -12,7 +12,7 @@ export class AppointmentBookingComponent {
   selectedTimeSlot!: string;
   services!: any[]; // Assuming services have an id and name
   timeSlots!: string[];
-  salonId: string = '12345'; // Example salon ID
+  salonId: string = '1'; // Example salon ID
 
   constructor(private http: HttpClient) {
     this.fetchServices(); // Fetch services on component initialization
