@@ -95,6 +95,16 @@ func GetMySalons(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": salons})
 }
 
+func GetAllServices(c *gin.Context) {
+	db := database.Db
+	var services []models.Service
+	if err := db.Find(&services).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": services})
+}
+
 func GetSalonServices(c *gin.Context) {
     db := database.Db
     id := c.Params.ByName("id")

@@ -14,20 +14,9 @@ export class SalonListComponent {
   ngOnInit() {
     this.fetchSalons();
   }
+
+  salons: any[] = [];
   
-
-  salons = [
-    { id: '1', name: 'Elegant Styles' },
-    { id: '2', name: 'Modern Cuts' },
-    { id: '3', name: 'The Classic Barber' },
-    { id: '4', name: 'Salon 4' },
-    { id: '5', name: 'Salon 5' },
-    { id: '6', name: 'Salon 6' },
-    { id: '7', name: 'Salon 7' },
-    { id: '8', name: 'Salon 8' },
-
-  ];
-
   selectSalon(salonId: string) {
 
     // Redirect to the booking page
@@ -38,7 +27,7 @@ export class SalonListComponent {
     // Fetch salons from the backend
     this.dataService.getSalons()
       .subscribe(salons => {
-        this.salons = salons;
+        this.salons = salons.data;
       }, error => {
         console.error('Error fetching salons', error);
       });
