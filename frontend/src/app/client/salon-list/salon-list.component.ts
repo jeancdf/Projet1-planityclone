@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { DataService } from 'src/app/service/data.service';
 
 @Component({
   selector: 'app-salon-list',
@@ -8,7 +9,12 @@ import { Router } from '@angular/router';
 })
 export class SalonListComponent {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private dataService: DataService) { }
+
+  ngOnInit() {
+    this.fetchSalons();
+  }
+  
 
   salons = [
     { id: '1', name: 'Elegant Styles' },
@@ -26,5 +32,16 @@ export class SalonListComponent {
 
     // Redirect to the booking page
     this.router.navigate(['/appointment-booking', salonId]);
+  }
+
+  fetchSalons() {
+    // Fetch salons from the backend
+    this.dataService.getSalons()
+      .subscribe(salons => {
+        this.salons = salons;
+      }, error => {
+        console.error('Error fetching salons', error);
+      });
+
   }
 }

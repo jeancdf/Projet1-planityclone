@@ -30,6 +30,7 @@ type Salon struct {
 	UpdatedAt time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"updated_at"`
 	Address   string    `gorm:"size:255;not null;" json:"address"`
 	Phone     string    `gorm:"size:255;not null;" json:"phone"`
+	service   []Service
 }
 
 type Reservation struct {
@@ -40,4 +41,11 @@ type Reservation struct {
 	Status          *bool     `gorm:"" json:"status"`
 	CreatedAt       time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"created_at"`
 	UpdatedAt       time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"updated_at"`
+}
+
+type Service struct {
+	ID        uint      `gorm:"primary_key;auto_increment" json:"id"`
+	Name      string    `gorm:"size:255;not null;unique" json:"name"`
+	Price     float64   `gorm:"not null" json:"price"`
+	SalonID   uint      `gorm:"not null" json:"salon_id"`
 }

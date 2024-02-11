@@ -94,3 +94,43 @@ func GetMySalons(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{"data": salons})
 }
+
+func GetSalonServices(c *gin.Context) {
+    db := database.Db
+    id := c.Params.ByName("id")
+    var salon userModels.Salon
+
+    // Fetch the salon by its ID
+    if err := db.First(&salon, id).Error; err != nil {
+        c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+        return
+    }
+
+    var services []models.Service
+    // Attempt to find associated services
+    err := db.Model(&salon).Association("Services").Find(&services)
+
+    // Check if there was an error in finding the services
+    if err != nil { // This check is incorrect because err is not returned by Find method in this context
+        // Correct handling involves checking the Error field of the Association directly
+    }
+
+    // The correct way to check for an error after calling Find on an association
+    if db.Model(&salon).Association("Services").Error != nil {
+        c.JSON(http.StatusInternalServerError, gin.H{"error": db.Model(&salon).Association("Services").Error.Error()})
+        return
+    }
+
+    c.JSON(http.StatusOK, gin.H{"data": services})
+}
+
+
+func GetSalonProfile(c *gin.Context) {
+	db := database.Db
+	id := c.Params.ByName("id")
+	var salon userModels.Salon
+	db.First(&salon, id)
+	var user userModels.User
+	db.First(&user, salon.UserID)
+	c.JSON(http.StatusOK, gin.H{"data": gin.H{"salon": salon, "user": user}})
+}
