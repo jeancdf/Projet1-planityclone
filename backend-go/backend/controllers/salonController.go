@@ -44,8 +44,19 @@ func UpdateSalon(c *gin.Context) {
 	id := c.Param("id")
 
 	var salon models.Salon
+	user_id, exists := c.Get("userID")
+	if !exists {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+		return
+	}
+
 	if err := db.First(&salon, id).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Salon not found"})
+		return
+	}
+
+	if salon.UserID != user_id {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
 		return
 	}
 
@@ -62,8 +73,17 @@ func UpdateSalon(c *gin.Context) {
 func DeleteSalon(c *gin.Context) {
 	db := database.Db
 	id := c.Params.ByName("id")
+	user_id, exists := c.Get("userID")
+	if !exists {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+		return
+	}
 	var salon userModels.Salon
 	db.First(&salon, id)
+	if salon.UserID != user_id {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+		return
+	}
 	if salon.ID != 0 {
 		db.Delete(&salon)
 		c.JSON(http.StatusOK, gin.H{"data": true})
