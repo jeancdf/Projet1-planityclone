@@ -30,7 +30,8 @@ type Salon struct {
 	UpdatedAt   time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"updated_at"`
 	Address     string    `gorm:"size:255;not null;" json:"address"`
 	Phone       string    `gorm:"size:255;not null;" json:"phone"`
-	Services    []Service `gorm:"many2many:salon_services;" json:"services"`
+	Services    []Service `gorm:"many2many:salon_services;" json:"-"`
+	ServiceIDs  []uint    `gorm:"-" json:"services"`
 	Description string    `gorm:"size:255;not null;" json:"description"`
 }
 
