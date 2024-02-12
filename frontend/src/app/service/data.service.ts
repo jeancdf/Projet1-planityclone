@@ -109,6 +109,15 @@ export class DataService {
     );
   }
 
+  
+  fetchClientReservation () {
+    return this.getHttpOptions().pipe(
+      switchMap(options =>
+        this.http.get(`api/myreservations`, options)
+      )
+    );
+  }
+
   fetchSalonServices(salonId: number): Observable<any> {
     return this.getHttpOptions().pipe(
       switchMap(options =>

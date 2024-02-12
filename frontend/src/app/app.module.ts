@@ -31,6 +31,7 @@ import { SalonServicesComponent } from './salon/salon-services/salon-services.co
 import { SalonClientListComponent } from './salon/salon-client-list/salon-client-list.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ToastrModule } from 'ngx-toastr';
+import { ClientReservationsComponent } from './client/client-reservations/client-reservations.component';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import { ToastrModule } from 'ngx-toastr';
     AdminAnalyticsComponent,
     SignupComponent,
     SalonServicesComponent,
-    SalonClientListComponent
+    SalonClientListComponent,
+    ClientReservationsComponent
   ],
   imports: [
     BrowserModule,

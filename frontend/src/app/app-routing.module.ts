@@ -13,6 +13,7 @@ import { SalonSlotManagementComponent } from './salon/salon-slot-management/salo
 import { SignupComponent } from './signup/signup.component';
 import { SalonServicesComponent } from './salon/salon-services/salon-services.component';
 import { SalonClientListComponent } from './salon/salon-client-list/salon-client-list.component';
+import { ClientReservationsComponent } from './client/client-reservations/client-reservations.component';
 
 
 const routes: Routes = [
@@ -31,7 +32,7 @@ const routes: Routes = [
 { path: 'salon-services', component: SalonServicesComponent, canActivate: [AuthGuard ], data: { role: 'salon' } },
 { path: 'appointment-booking', component: AppointmentBookingComponent, canActivate: [AuthGuard], data: { role: 'client' } },
 { path: 'appointment-booking/:id', component: AppointmentBookingComponent, canActivate: [AuthGuard], data: { role: 'client' } },
-
+{ path: 'client-reservations', component: ClientReservationsComponent, canActivate: [AuthGuard], data: {role: 'client'}},
 ];
 
 @NgModule({

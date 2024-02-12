@@ -1,0 +1,16 @@
+<div class="container">
+    <h2>Client Reservations</h2>
+    <div *ngIf="clientReservations.length === 0" class="alert alert-info">
+      No reservations found.
+    </div>
+    <ul class="list-group" *ngIf="clientReservations.length > 0">
+      <li *ngFor="let reservation of clientReservations" class="list-group-item">
+        Reservation Date and Time: {{reservation.reservation_date | date:'fullDate'}} at {{reservation.reservation_date | date:'shortTime'}}
+        <br>
+        Status: <span [class]="reservation.status ? 'text-success' : 'text-danger'">
+          {{reservation.status ? 'Accepted' : 'Pending'}}
+        </span>
+      </li>
+    </ul>
+  </div>
+  
