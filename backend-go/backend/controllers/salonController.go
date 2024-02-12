@@ -52,7 +52,11 @@ func CreateSalon(c *gin.Context) {
 func UpdateSalon(c *gin.Context) {
 	db := database.Db
 	id := c.Param("id")
-
+	_, exists := c.Get("userID")
+	if !exists {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+		return
+	}
 
 	var salon models.Salon
 	if err := db.First(&salon, id).Error; err != nil {
@@ -160,6 +164,7 @@ func GetMySalons(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
+
 	c.JSON(http.StatusOK, gin.H{"data": salons})
 }
 

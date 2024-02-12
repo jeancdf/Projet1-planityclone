@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, switchMap } from 'rxjs';
+import { Observable, catchError, switchMap, throwError } from 'rxjs';
 import { TokenStorageService } from './token-storage.service'; // Make sure to import TokenStorageService
 import { of } from 'rxjs';
 
@@ -85,15 +85,31 @@ export class DataService {
     );
   }
 
-  fetchSalonProfile(salonId: string): Observable<any> {
+  fetchSalonProfile(salon_id: any): Observable<any> {
+    let options: any;
     return this.getHttpOptions().pipe(
-      switchMap(options =>
-        this.http.get(`/api/my-salons/`, options)
-      )
+      switchMap((option: any) => {
+        options = option
+        return this.http.get(`/api/my-salons/`, options)
+      }
+      ),
+      switchMap((response: any) => {
+        if (response && response.data && response.data.length > 0) {
+          const firstSalonId = response.data[0].id;
+          return this.http.get(`/api/salons/${firstSalonId}`, options);
+        } else {
+          return throwError('No salons found');
+        }
+      }),
+      catchError(error => {
+        console.error('Error fetching salon profile:', error);
+        return throwError(error);
+      })
     );
   }
 
   updateSalonProfile(salonId: string, salon: any): Observable<any> {
+    console.log('Updating salon profile:', salon);
     return this.getHttpOptions().pipe(
       switchMap(options =>
         this.http.put(`/api/salons/${salonId}`, salon, options)
@@ -101,7 +117,7 @@ export class DataService {
     );
   }
 
-  fetchReservation () {
+  fetchReservation() {
     return this.getHttpOptions().pipe(
       switchMap(options =>
         this.http.get(`api/mysalonsreservations`, options)
@@ -109,8 +125,8 @@ export class DataService {
     );
   }
 
-  
-  fetchClientReservation () {
+
+  fetchClientReservation() {
     return this.getHttpOptions().pipe(
       switchMap(options =>
         this.http.get(`api/myreservations`, options)
@@ -142,7 +158,7 @@ export class DataService {
   acceptReservation(salonId: any, reservationId: any) {
     return this.getHttpOptions().pipe(
       switchMap(options =>
-        this.http.put(`api/salons/${salonId}/reservations/${reservationId}/accept`,{}, options)
+        this.http.put(`api/salons/${salonId}/reservations/${reservationId}/accept`, {}, options)
       )
     );
   }
@@ -150,7 +166,7 @@ export class DataService {
   refuseReservation(salonId: any, reservationId: any) {
     return this.getHttpOptions().pipe(
       switchMap(options =>
-        this.http.put(`api/salons/${salonId}/reservations/${reservationId}/decline`,{}, options)
+        this.http.put(`api/salons/${salonId}/reservations/${reservationId}/decline`, {}, options)
       )
     );
   }

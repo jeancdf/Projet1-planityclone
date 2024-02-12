@@ -8,7 +8,7 @@ import { DataService } from 'src/app/service/data.service';
 })
 export class SalonProfileComponent implements OnInit {
   salon: any = {
-   
+
   };
   availableServices: any;
   selectedServiceIds: number[] = [];
@@ -32,17 +32,16 @@ export class SalonProfileComponent implements OnInit {
       this.salon.services = [];
     }
   }
-  
+
 
   fetchSalonProfile() {
     this.dataService.fetchSalonProfile(this.salon.id).subscribe(profile => {
-      this.salon = profile.data[0];
-     console.log('Salon Profile:', this.salon);
+      this.salon = profile.data.salon;
+      this.salon.services = profile.data.services;
     }, error => {
-      console.error('Error fetching salon profile', error);
     });
   }
-  
+
 
   fetchAllServices() {
     // Assuming fetchAvailableServices method is implemented in DataService
@@ -64,9 +63,12 @@ export class SalonProfileComponent implements OnInit {
   saveProfile() {
     // Assign selectedServiceIds directly as the services array
     this.salon.services_ids = this.selectedServiceIds;
-  
+
+    this.salon.service_ids = this.selectedServiceIds;
+    // remove services from the salon object
+    delete this.salon.services;
     console.log('Updated salon data to send:', this.salon);
-  
+
     // Send this.salon to the backend with services as an array of IDs
     this.dataService.updateSalonProfile(this.salon.id, this.salon).subscribe(
       updatedProfile => {
@@ -78,9 +80,9 @@ export class SalonProfileComponent implements OnInit {
         console.error('Error updating salon profile', error);
       }
     );
-  
+
     this.toggleEditMode();
   }
-  
-  
+
+
 }
