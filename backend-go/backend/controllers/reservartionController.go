@@ -216,6 +216,33 @@ func GetMySalonsReservations(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
+	userIDMap := make(map[uint]bool)
+	for _, reservation := range reservations {
+		userIDMap[reservation.UserID] = true
+	}
 
-	c.JSON(http.StatusOK, gin.H{"data": reservations})
+	var userIDs []uint
+	for id := range userIDMap {
+		userIDs = append(userIDs, id)
+	}
+	var users []models.User
+	if err := db.Where("id IN (?)", userIDs).Find(&users).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	userMap := make(map[uint]models.User)
+	for _, user := range users {
+		userMap[user.ID] = user
+	}
+
+	var formattedReservations []map[string]interface{}
+	for _, reservation := range reservations {
+		formattedReservation := map[string]interface{}{
+			"reservation": reservation,
+			"user":        userMap[reservation.UserID],
+		}
+		formattedReservations = append(formattedReservations, formattedReservation)
+	}
+	c.JSON(http.StatusOK, gin.H{"data": formattedReservations})
 }
