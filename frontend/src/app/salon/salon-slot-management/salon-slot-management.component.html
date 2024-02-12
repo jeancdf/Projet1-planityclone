@@ -8,8 +8,9 @@
       <li *ngFor="let slot of slots" class="list-group-item">
         Time: {{slot.time}}
         <span class="mx-4">Booked by: {{slot.clientUsername}}</span>
+        <button class="btn btn-success mx-3"> Accept</button>
 
-        <button class="btn btn-danger ml-auto" (click)="slot.id !== undefined ? removeSlot(slot.id) : null">Remove</button>
+        <button class="btn btn-danger mx-3" (click)="slot.id !== undefined ? removeSlot(slot.id) : null">Remove</button>
 
         <!-- Optional: Add button to toggle booking status -->
       </li>

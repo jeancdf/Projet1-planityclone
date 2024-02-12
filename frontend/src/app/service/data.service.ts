@@ -101,6 +101,14 @@ export class DataService {
     );
   }
 
+  fetchReservation () {
+    return this.getHttpOptions().pipe(
+      switchMap(options =>
+        this.http.put(`/salons/reservations`, options)
+      )
+    );
+  }
+
 
   // Add any other methods here, and use getAuthHeaders() to include the token in the headers
 }
