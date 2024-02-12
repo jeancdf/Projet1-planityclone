@@ -22,4 +22,8 @@ func ReservationRouter(r *gin.Engine) {
 	// Specific routes for accepting and declining reservations
 	authGroup.PUT("/salons/:salonId/reservations/:reservationId/accept", controller.AcceptReservation)
 	authGroup.PUT("/salons/:salonId/reservations/:reservationId/decline", controller.DeclineReservation)
+
+	// Routes for getting user-specific reservations
+	authGroup.GET("/myreservations", controller.GetMyReservations)
+	authGroup.GET("/mysalonsreservations", controller.GetMySalonsReservations)
 }
