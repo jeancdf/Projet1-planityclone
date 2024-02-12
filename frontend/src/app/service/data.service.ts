@@ -93,6 +93,14 @@ export class DataService {
     );
   }
 
+  updateSalonProfile(salonId: string, salon: any): Observable<any> {
+    return this.getHttpOptions().pipe(
+      switchMap(options =>
+        this.http.put(`/api/salons/${salonId}`, salon, options)
+      )
+    );
+  }
+
 
   // Add any other methods here, and use getAuthHeaders() to include the token in the headers
 }

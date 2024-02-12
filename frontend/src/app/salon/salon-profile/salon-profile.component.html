@@ -17,20 +17,27 @@
 
   <!-- Salon Description -->
   <p *ngIf="!editMode">{{ salon.description }}</p>
-  <textarea *ngIf="editMode" [(ngModel)]="salon.description" class="form-control mb-2" placeholder="Salon Description"></textarea>
+  <textarea *ngIf="editMode" [(ngModel)]="salon.description" class="form-control mb-2"
+    placeholder="Salon Description"></textarea>
 
   <!-- Services Offered -->
   <h3 *ngIf="!editMode">Services Offered</h3>
   <div *ngIf="editMode">
     <h3>Edit Services</h3>
-    <ng-select [items]="availableServices"
-               bindLabel="name"
-               bindValue="id"
-               [(ngModel)]="selectedServiceIds"
-               [multiple]="true"
-               placeholder="Select services"
-               class="form-control mb-2">
+    <ng-select [items]="availableServices" [multiple]="true" bindLabel="name" bindValue="id"
+      [(ngModel)]="selectedServiceIds" [closeOnSelect]="false" placeholder="Select services" class="form-control mb-2">
+      <!-- Group Template -->
+      <!-- Remove or adjust this if your data doesn't support grouping -->
+      <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
+        <input id="group-{{index}}" type="checkbox" [ngModel]="item$.selected" /> {{item | uppercase}}
+      </ng-template>
+
+      <!-- Option Template -->
+      <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+        <input id="service-{{index}}" type="checkbox" [ngModel]="item$.selected" /> {{item.name}}
+      </ng-template>
     </ng-select>
+
   </div>
   <ul *ngIf="!editMode">
     <li *ngFor="let service of salon.services">{{ service.name }} - ${{ service.price }}</li>
