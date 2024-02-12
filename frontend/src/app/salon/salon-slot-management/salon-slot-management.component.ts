@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/service/data.service';
 
 interface Slot {
@@ -23,8 +23,8 @@ export class SalonSlotManagementComponent {
 
   }
 
-  ngOnint(){
-    this.fetchReservations
+  ngOnInit(){
+    this.fetchReservations()
   }
 
   addSlot(): void {
@@ -35,8 +35,8 @@ export class SalonSlotManagementComponent {
         clientUsername: this.newClientUsername // Assign the client's username to the new slot
       };
       this.reservations.push(newSlot);
-      this.newSlotTime = ''; // Reset for next input
-      this.newClientUsername = ''; // Reset the client username for the next slot
+      this.newSlotTime = ''; 
+      this.newClientUsername = ''; 
     }
   }
 
@@ -46,7 +46,7 @@ export class SalonSlotManagementComponent {
   }
   
   fetchReservations(){
-    this.dataService.fetchReservation.().subscribe((reservation: any) => {
+    this.dataService.fetchReservation().subscribe((reservation: any) => {
       this.reservations = reservation;
     }, (error: any) => {
       console.error('Error fetching services', error);

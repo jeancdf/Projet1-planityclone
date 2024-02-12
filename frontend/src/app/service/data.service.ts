@@ -104,7 +104,7 @@ export class DataService {
   fetchReservation () {
     return this.getHttpOptions().pipe(
       switchMap(options =>
-        this.http.put(`/salons/reservations`, options)
+        this.http.get(`api/myreservations`, options)
       )
     );
   }
