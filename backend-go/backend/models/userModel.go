@@ -22,16 +22,16 @@ type User struct {
 }
 
 type Salon struct {
-	ID        uint      `gorm:"primary_key;auto_increment" json:"id"`
-	Name      string    `gorm:"size:255;not null;unique" json:"name"`
-	Email     string    `gorm:"size:100;not null;unique" json:"email"`
-	UserID    uint      `gorm:"not null" json:"user_id"`
-	CreatedAt time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"created_at"`
-	UpdatedAt time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"updated_at"`
-	Address   string    `gorm:"size:255;not null;" json:"address"`
-	Phone     string    `gorm:"size:255;not null;" json:"phone"`
-	service   []Service `gorm:"foreignKey:SalonID" json:"service"`
-	description string `gorm:"size:255;not null;" json:"description"`
+	ID          uint      `gorm:"primary_key;auto_increment" json:"id"`
+	Name        string    `gorm:"size:255;not null;unique" json:"name"`
+	Email       string    `gorm:"size:100;not null;unique" json:"email"`
+	UserID      uint      `gorm:"not null" json:"user_id"`
+	CreatedAt   time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"created_at"`
+	UpdatedAt   time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"updated_at"`
+	Address     string    `gorm:"size:255;not null;" json:"address"`
+	Phone       string    `gorm:"size:255;not null;" json:"phone"`
+	Services    []Service `gorm:"many2many:salon_services;" json:"services"`
+	Description string    `gorm:"size:255;not null;" json:"description"`
 }
 
 type Reservation struct {
@@ -48,4 +48,9 @@ type Service struct {
 	ID    uint    `gorm:"primary_key;auto_increment" json:"id"`
 	Name  string  `gorm:"size:255;not null;unique" json:"name"`
 	Price float64 `gorm:"not null" json:"price"`
+}
+
+type SalonService struct {
+	SalonID   uint `gorm:"primaryKey"`
+	ServiceID uint `gorm:"primaryKey"`
 }

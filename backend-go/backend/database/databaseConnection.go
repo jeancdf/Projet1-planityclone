@@ -36,8 +36,12 @@ func Dbinstance() *gorm.DB {
 
 var Db = Dbinstance()
 
-func DbMigrate(db *gorm.DB) {
-	db.AutoMigrate(&userModels.User{}, &userModels.Salon{}, &userModels.Reservation{}, &userModels.Service{})
+func DbMigrate(db *gorm.DB) error {
+	if err := db.AutoMigrate(&userModels.User{}, &userModels.Reservation{}, &userModels.Service{}, &userModels.Salon{}, &userModels.SalonService{}).Error; err != nil {
+		fmt.Println("Error migrating the schema: ", err)
+	}
+	fmt.Println("Database Migrated")
+	return nil
 }
 
 func CloseDb(db *gorm.DB) {
