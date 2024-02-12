@@ -11,7 +11,7 @@ export class DataService {
   constructor(
     private http: HttpClient,
     private tokenStorageService: TokenStorageService // Inject TokenStorageService
-  ) {}
+  ) { }
 
   private getHttpOptions(): Observable<{ headers: HttpHeaders }> {
     return this.tokenStorageService.getToken().pipe(
@@ -109,6 +109,24 @@ export class DataService {
     );
   }
 
+  fetchSalonServices(salonId: number): Observable<any> {
+    return this.getHttpOptions().pipe(
+      switchMap(options =>
+        this.http.get(`/api/salons/${salonId}`, options)
+      )
+    );
+  }
 
-  // Add any other methods here, and use getAuthHeaders() to include the token in the headers
+  saveReservation(salonId: number, time: Date): Observable<any> {
+
+    const data = {
+      salon_id: Number(salonId),
+      reservation_date: time
+    }
+    return this.getHttpOptions().pipe(
+      switchMap(options =>
+        this.http.post(`/api/reservations`, data, options)
+      )
+    );
+  }
 }
