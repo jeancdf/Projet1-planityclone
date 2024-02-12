@@ -28,13 +28,24 @@ func CreateSalon(c *gin.Context) {
 	}
 	var salon models.Salon
 
-	c.BindJSON(&salon)
+	if err := c.BindJSON(&salon); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
 	if salon.Name == "" || salon.Email == "" || salon.Address == "" || salon.Phone == "" {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Name, Email, Address, and Phone are required"})
 		return
 	}
 	salon.UserID = user_id.(uint)
+
 	db.Create(&salon)
+
+	var services []models.Service
+	if len(salon.ServiceIDs) > 0 {
+		db.Where("id IN (?)", salon.ServiceIDs).Find(&services)
+		db.Model(&salon).Association("Services").Replace(services)
+	}
+
 	c.JSON(http.StatusOK, gin.H{"data": salon})
 }
 
