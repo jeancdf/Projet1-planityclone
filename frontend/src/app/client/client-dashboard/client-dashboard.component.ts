@@ -23,7 +23,7 @@ export class ClientDashboardComponent {
 
 
   goToBooking(salonId: string) {
-    this.router.navigate(['/appointment-booking', salonId]); // Adjust the path as per your route configuration
+    this.router.navigate(['/appointment-booking', salonId]);
   }
 
 }

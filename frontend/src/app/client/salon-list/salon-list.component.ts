@@ -19,12 +19,10 @@ export class SalonListComponent {
   
   selectSalon(salonId: string) {
 
-    // Redirect to the booking page
     this.router.navigate(['/appointment-booking', salonId]);
   }
 
   fetchSalons() {
-    // Fetch salons from the backend
     this.dataService.getSalons()
       .subscribe(salons => {
         this.salons = salons.data;

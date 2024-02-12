@@ -4,7 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 
 
 interface Slot {
-  id?: number; // Optional: Include if you plan to uniquely identify slots
+  id?: number; 
   time: string;
   isBooked: boolean;
   clientUsername?: string;
@@ -16,7 +16,7 @@ interface Slot {
   styleUrls: ['./salon-slot-management.component.css']
 })
 export class SalonSlotManagementComponent {
- reservations : any; 
+ reservations : any[]= []; 
 
   newSlotTime: string = ''; 
   newClientUsername: string = '';
@@ -34,7 +34,7 @@ export class SalonSlotManagementComponent {
       const newSlot: Slot = {
         time: this.newSlotTime,
         isBooked: false,
-        clientUsername: this.newClientUsername // Assign the client's username to the new slot
+        clientUsername: this.newClientUsername 
       };
       this.reservations.push(newSlot);
       this.newSlotTime = ''; 
@@ -42,14 +42,14 @@ export class SalonSlotManagementComponent {
     }
   }
 
-  // Function to remove a slot by id
+
   removeSlot(slotId: number): void {
     this.reservations = this.reservations.filter((reservation: any) => reservation.id !== slotId);
   }
   
   fetchReservations(){
     this.dataService.fetchReservation().subscribe((reservation: any) => {
-      // Filter out reservations with status false
+
       this.reservations = reservation.data.filter((r: any) => r.reservation.status !== false);
     }, (error: any) => {
       console.error('Error fetching reservations', error);
@@ -62,7 +62,7 @@ export class SalonSlotManagementComponent {
     this.dataService.acceptReservation(salonId, reservationId).subscribe((response: any) => {
       const index = this.reservations.findIndex((r: any) => r.id === reservationId);
       if (index !== -1) {
-        this.reservations[index].status = true; // Mark as accepted
+        this.reservations[index].status = true; 
         this.toastr.success('Reservation accepted successfully!');
       }
     }, (error: any) => {
@@ -73,7 +73,7 @@ export class SalonSlotManagementComponent {
   
   refuseReservation(salonId: number, reservationId: number) {
     this.dataService.refuseReservation(salonId, reservationId).subscribe((response: any) => {
-      // Since refused reservations are filtered out, remove it from the array
+     
       this.reservations = this.reservations.filter((r: any) => r.id !== reservationId);
       this.toastr.success('Reservation refused successfully!');
     }, (error: any) => {
@@ -82,9 +82,6 @@ export class SalonSlotManagementComponent {
     });
   }
   
-  
-
-  // Optional: Function to update a slot's booking status
   updateSlotBooking(slotId: number, isBooked: boolean): void {
     const slotIndex = this.reservations.findIndex((slot : any) => slot.id === slotId);
     if (slotIndex !== -1) {

@@ -1,38 +1,33 @@
 <div class="salon-profile container mt-4">
-  <!-- Salon Name -->
+  
   <h2 *ngIf="!editMode">{{ salon.name }}</h2>
   <input *ngIf="editMode" type="text" [(ngModel)]="salon.name" class="form-control mb-2" placeholder="Salon Name">
 
-  <!-- Salon Email -->
   <p *ngIf="!editMode">Email: {{ salon.email }}</p>
   <input *ngIf="editMode" type="email" [(ngModel)]="salon.email" class="form-control mb-2" placeholder="Salon Email">
 
-  <!-- Salon Phone -->
   <p *ngIf="!editMode">Phone: {{ salon.phone }}</p>
   <input *ngIf="editMode" type="tel" [(ngModel)]="salon.phone" class="form-control mb-2" placeholder="Salon Phone">
 
-  <!-- Salon Address -->
   <p *ngIf="!editMode">Address: {{ salon.address }}</p>
   <input *ngIf="editMode" type="text" [(ngModel)]="salon.address" class="form-control mb-2" placeholder="Salon Address">
 
-  <!-- Salon Description -->
   <p *ngIf="!editMode">{{ salon.description }}</p>
   <textarea *ngIf="editMode" [(ngModel)]="salon.description" class="form-control mb-2"
     placeholder="Salon Description"></textarea>
 
-  <!-- Services Offered -->
+
   <h3 *ngIf="!editMode">Services Offered</h3>
   <div *ngIf="editMode">
     <h3>Edit Services</h3>
     <ng-select [items]="availableServices" [multiple]="true" bindLabel="name" bindValue="id"
       [(ngModel)]="selectedServiceIds" [closeOnSelect]="false" placeholder="Select services" class="form-control mb-2">
-      <!-- Group Template -->
-      <!-- Remove or adjust this if your data doesn't support grouping -->
+
       <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
         <input id="group-{{index}}" type="checkbox" [ngModel]="item$.selected" /> {{item | uppercase}}
       </ng-template>
 
-      <!-- Option Template -->
+
       <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
         <input id="service-{{index}}" type="checkbox" [ngModel]="item$.selected" /> {{item.name}}
       </ng-template>
@@ -44,7 +39,6 @@
   </ul>
 
 
-  <!-- Edit/Save Buttons -->
   <button class="btn btn-secondary mb-2" (click)="toggleEditMode()">
     {{ editMode ? 'Cancel' : 'Edit Profile' }}
   </button>

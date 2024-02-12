@@ -24,14 +24,14 @@ export class TokenStorageService {
   public getToken(): Observable<string | null> {
     const token = window.sessionStorage.getItem(TOKEN_KEY);
     
-    // Check if the token exists and if it's not expired
+
     if (token && !this.isTokenExpired(token)) {
-        return of(token); // Token is still valid, return it using 'of' operator from rxjs
+        return of(token); 
     } else if (token && this.isTokenExpired(token)){
-        // Token is either expired or doesn't exist, so try to refresh it
+
         return this.refreshToken();
     } else {
-        // No token exists, so return null
+
         return of(null);
     }
 }
@@ -54,30 +54,30 @@ export class TokenStorageService {
   public isTokenExpired(token: string): boolean {
     try {
       const tokenData: any = jwt_decode(token);
-      const currentTime = Date.now() / 1000; // Convert to seconds
+      const currentTime = Date.now() / 1000;
 
-      // Check if the token's expiration time is in the past
+
       return tokenData.exp < currentTime;
     } catch (error) {
-      // Handle invalid tokens or errors
-      return true; // Consider it expired if there's an error
+
+      return true;
     }
   }
 
 
   public refreshToken(): Observable<string | null> {
-    const refreshToken = ''; // Get the refresh token from wherever it's stored
+    const refreshToken = ''; 
 
     if (!refreshToken) {
-      return new Observable(observer => observer.next(null)); // No refresh token available
+      return new Observable(observer => observer.next(null)); 
     }
 
     return this.http.post<{ accessToken: string }>('/api/refresh-token', { refreshToken })
       .pipe(
-        map((response: any) => response.accessToken), // Extract the new access token from the response
+        map((response: any) => response.accessToken), 
         tap((newToken: any) => {
           if (newToken) {
-            this.saveToken(newToken); // Update the token in session storage
+            this.saveToken(newToken); 
           }
         })
       );

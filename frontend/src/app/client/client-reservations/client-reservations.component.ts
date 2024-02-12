@@ -9,7 +9,6 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ClientReservationsComponent implements OnInit {
   clientReservations: any;
-  clientId: number = 1; // Example client ID, replace with dynamic data as needed
 
   constructor(private dataService: DataService, private toastr: ToastrService) {}
 

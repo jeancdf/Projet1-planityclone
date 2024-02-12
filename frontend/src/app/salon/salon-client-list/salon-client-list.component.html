@@ -1,1 +1,14 @@
-<p>salon-client-list works!</p>
+<div class="container">
+    <h2>Salon Clients</h2>
+    <div *ngIf="salonClients.length === 0" class="alert alert-info">
+      No clients found.
+    </div>
+    <ul class="list-group">
+      <li *ngFor="let item of salonClients" class="list-group-item">
+        <div><strong>Name:</strong> {{item.user.username}}</div>
+        <div><strong>Email:</strong> {{item.user.email}}</div>
+        <div><strong>Had Reservation:</strong> {{ item.reservation ? 'Yes' : 'No' }}</div>
+      </li>
+    </ul>
+  </div>
+  
