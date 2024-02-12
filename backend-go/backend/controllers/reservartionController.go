@@ -169,3 +169,48 @@ func DeclineReservation(c *gin.Context) {
 	db.Save(&reservation)
 	c.JSON(http.StatusOK, gin.H{"message": "Reservation declined", "data": reservation})
 }
+
+func GetMyReservations(c *gin.Context) {
+	db := database.Db
+	userID, exists := c.Get("userID")
+	if !exists {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+		return
+	}
+
+	var reservations []models.Reservation
+	if err := db.Where("user_id = ?", userID).Find(&reservations).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": reservations})
+}
+
+func GetMySalonsReservations(c *gin.Context) {
+	db := database.Db
+	userID, exists := c.Get("userID")
+	if !exists {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+		return
+	}
+
+	var salons []models.Salon
+	if err := db.Where("user_id = ?", userID).Find(&salons).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	var salonIDs []uint
+	for _, salon := range salons {
+		salonIDs = append(salonIDs, salon.ID)
+	}
+
+	var reservations []models.Reservation
+	if err := db.Where("salon_id IN ?", salonIDs).Find(&reservations).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": reservations})
+}
