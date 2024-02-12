@@ -63,7 +63,7 @@ export class SalonProfileComponent implements OnInit {
 
   saveProfile() {
     // Assign selectedServiceIds directly as the services array
-    this.salon.ServiceIDs = this.selectedServiceIds;
+    this.salon.services_ids = this.selectedServiceIds;
   
     console.log('Updated salon data to send:', this.salon);
   
