@@ -1,33 +1,25 @@
 <div class="salon-dashboard container mt-4">
   <h2>Salon Dashboard</h2>
 
-  <!-- Services Card -->
-  <mat-card class="dashboard-card mt-4 p-3">
-    <mat-card-title [routerLink]="['/salon-services']" style="cursor: pointer;">Services Offered</mat-card-title>
-    <mat-card-content>
-      <p>List of services goes here...</p>
-    </mat-card-content>
-  </mat-card>
-
   <!-- Client List Card -->
-  <mat-card class="dashboard-card mt-4 p-3">
-    <mat-card-title [routerLink]="['/salon-client-list']" style="cursor: pointer;">Client List</mat-card-title>
+  <mat-card class="dashboard-card mt-4 p-3" [routerLink]="['/salon-client-list']">
+    <mat-card-title  style="cursor: pointer;">Client List</mat-card-title>
     <mat-card-content>
       <p>List of clients goes here...</p>
     </mat-card-content>
   </mat-card>
 
   <!-- Salon Profile Card -->
-  <mat-card class="dashboard-card mt-4 p-3">
-    <mat-card-title [routerLink]="['/salon-profile']" style="cursor: pointer;">Salon Profile</mat-card-title>
+  <mat-card class="dashboard-card mt-4 p-3" [routerLink]="['/salon-profile']">
+    <mat-card-title style="cursor: pointer;">Salon Profile</mat-card-title>
     <mat-card-content>
       <p>Salon profile details go here...</p>
     </mat-card-content>
   </mat-card>
 
   <!-- Salon Slot Management Card -->
-  <mat-card class="dashboard-card mt-4 p-3">
-    <mat-card-title [routerLink]="['/salon-slot-management']" style="cursor: pointer;">Salon Slot Management</mat-card-title>
+  <mat-card class="dashboard-card mt-4 p-3" [routerLink]="['/salon-slot-management']">
+    <mat-card-title  style="cursor: pointer;">Salon Slot Management</mat-card-title>
     <mat-card-content>
       <p>Salon slot management details go here...</p>
     </mat-card-content>

@@ -9,11 +9,11 @@
   </div>
   <ul class="list-group" *ngIf="reservations.length > 0">
     <li *ngFor="let slot of reservations" class="list-group-item">
-      Time: {{slot.reservation_date | date:'short'}}
-      <span class="mx-4">Booked by: User {{slot.user_id}}</span>
+      Time: {{slot.reservation.reservation_date | date:'short'}}
+      <span class="mx-4">Booked by: User {{slot.user.username}}</span>
       <!-- Show Accept/Remove buttons only if status is null -->
-      <button class="btn btn-success mx-3" *ngIf="slot.status === null" (click)="acceptReservation(slot.salon_id, slot.id)">Accept</button>
-      <button class="btn btn-danger mx-3" *ngIf="slot.status === null" (click)="refuseReservation(slot.salon_id, slot.id)">Remove</button>
+      <button class="btn btn-success mx-3" *ngIf="slot.reservation.status === null" (click)="acceptReservation(slot.salon_id, slot.user.id)">Accept</button>
+      <button class="btn btn-danger mx-3" *ngIf="slot.reservation.status === null" (click)="refuseReservation(slot.salon_id, slot.reservation.id)">Remove</button>
     </li>
   </ul>
 </div>

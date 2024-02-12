@@ -33,6 +33,7 @@ const routes: Routes = [
 { path: 'appointment-booking', component: AppointmentBookingComponent, canActivate: [AuthGuard], data: { role: 'client' } },
 { path: 'appointment-booking/:id', component: AppointmentBookingComponent, canActivate: [AuthGuard], data: { role: 'client' } },
 { path: 'client-reservations', component: ClientReservationsComponent, canActivate: [AuthGuard], data: {role: 'client'}},
+{ path: 'salon-client-list', component: SalonClientListComponent , canActivate: [AuthGuard], data: {role: 'salon'}}
 ];
 
 @NgModule({

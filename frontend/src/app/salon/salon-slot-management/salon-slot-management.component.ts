@@ -50,7 +50,7 @@ export class SalonSlotManagementComponent {
   fetchReservations(){
     this.dataService.fetchReservation().subscribe((reservation: any) => {
       // Filter out reservations with status false
-      this.reservations = reservation.data.filter((r: any) => r.status !== false);
+      this.reservations = reservation.data.filter((r: any) => r.reservation.status !== false);
     }, (error: any) => {
       console.error('Error fetching reservations', error);
       this.toastr.error('Failed to fetch reservations.');
