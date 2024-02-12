@@ -43,7 +43,6 @@ func UpdateSalon(c *gin.Context) {
 	id := c.Param("id")
 	var salon models.Salon
 
-
 	if err := db.First(&salon, id).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Salon not found"})
 		return
@@ -57,20 +56,11 @@ func UpdateSalon(c *gin.Context) {
 
 	db.Model(&salon).Updates(updatedSalon)
 
-	var serviceIDs []uint
-	if err := c.BindJSON(&serviceIDs); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
+	var services []models.Service
+	if len(updatedSalon.ServiceIDs) > 0 {
+		db.Where("id IN (?)", updatedSalon.ServiceIDs).Find(&services)
 	}
-
-	db.Model(&salon).Association("Services").Clear()
-
-	for _, serviceID := range serviceIDs {
-		var service models.Service
-		if db.First(&service, serviceID).Error == nil {
-			db.Model(&salon).Association("Services").Append(&service)
-		}
-	}
+	db.Model(&salon).Association("Services").Replace(services)
 
 	c.JSON(http.StatusOK, gin.H{"data": salon})
 }
