@@ -50,7 +50,7 @@ export class SalonProfileComponent implements OnInit {
   fetchAllServices() {
     // Assuming fetchAvailableServices method is implemented in DataService
     this.dataService.fetchAllServices().subscribe(services => {
-      this.availableServices = services;
+      this.availableServices = services.data;
     }, error => {
       console.error('Error fetching available services', error);
     });
@@ -65,10 +65,25 @@ export class SalonProfileComponent implements OnInit {
   }
 
   saveProfile() {
-    // Map selected IDs back to service objects if necessary
-    this.salon.services = this.availableServices.filter((service: any) => this.selectedServiceIds.includes(service.id));
-    console.log('Updated salon data:', this.salon);
-    // Here, implement the actual save logic, possibly using this.dataService
+    // Assign selectedServiceIds directly as the services array
+    this.salon.services = this.selectedServiceIds;
+  
+    console.log('Updated salon data to send:', this.salon);
+  
+    // Send this.salon to the backend with services as an array of IDs
+    this.dataService.updateSalonProfile(this.salon.id, this.salon).subscribe(
+      updatedProfile => {
+        console.log('Updated salon profile:', updatedProfile);
+        // Assuming the backend returns the full updated salon object, including services
+        // You might need to refresh the services in your component or handle the updated data
+        this.salon = updatedProfile.data;
+      }, error => {
+        console.error('Error updating salon profile', error);
+      }
+    );
+  
     this.toggleEditMode();
   }
+  
+  
 }
