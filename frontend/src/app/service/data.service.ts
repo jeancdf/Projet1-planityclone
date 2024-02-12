@@ -88,7 +88,7 @@ export class DataService {
   fetchSalonProfile(salonId: string): Observable<any> {
     return this.getHttpOptions().pipe(
       switchMap(options =>
-        this.http.get(`/api/salons/${salonId}`, options)
+        this.http.get(`/api/my-salons/`, options)
       )
     );
   }

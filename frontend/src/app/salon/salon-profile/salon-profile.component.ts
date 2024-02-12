@@ -37,10 +37,7 @@ export class SalonProfileComponent implements OnInit {
   fetchSalonProfile() {
     this.dataService.fetchSalonProfile(this.salon.id).subscribe(profile => {
       this.salon = profile.data;
-      // Ensure salon.services is always an array
-      if (!this.salon.services) {
-        this.salon.services = [];
-      }
+     console.log('Salon Profile:', this.salon);
     }, error => {
       console.error('Error fetching salon profile', error);
     });
