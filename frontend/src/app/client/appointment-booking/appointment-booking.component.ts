@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router'; 
-import { DataService } from '../../service/data.service'; 
+import { ActivatedRoute } from '@angular/router';
+import { DataService } from '../../service/data.service';
 
 
 @Component({
@@ -13,28 +13,42 @@ export class AppointmentBookingComponent {
   selectedDate!: Date;
   selectedService!: string;
   selectedTimeSlot!: string;
-  services!: any[]; 
-  timeSlots!: string[];
+  services!: any[];
+  timeSlots = [
+    "8:00",
+    "9:00",
+    "10:00",
+    "11:00",
+    "12:00",
+    "14:00",
+    "15:00",
+    "16:00",
+    "17:00",
+    "18:00"
+  ];
   salonId: any;
-  
-  constructor( private dataService: DataService, private http: HttpClient, private route: ActivatedRoute) {
-     
-   
+
+  constructor(private dataService: DataService, private http: HttpClient, private route: ActivatedRoute) {
+
+
   }
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
-      console.log(params)
       this.salonId = params.get('id');
-      console.log('Salon ID:', this.salonId);
     });
-    this.fetchServices();
+    this.dataService.fetchSalonServices(this.salonId)
+      .subscribe(salons => {
+        this.services = salons.data.services;
+      }, error => {
+        console.error('Error fetching salons', error);
+      });
   }
 
   onDateChange() {
-    if (this.selectedDate) {
-      this.fetchAvailableTimeSlots(this.selectedDate);
-    }
+    // if (this.selectedDate) {
+    //   this.fetchAvailableTimeSlots(this.selectedDate);
+    // }
   }
 
   fetchServices() {
@@ -46,19 +60,17 @@ export class AppointmentBookingComponent {
       });
   }
 
-  fetchAvailableTimeSlots(date: Date) {
-    const dateString = new Date (date.toISOString().split('T')[0])
-    this.dataService.fetchAvailableTimeSlots(this.salonId, dateString).subscribe(
-      slots => {
-        this.timeSlots = slots;
-      }, error => {
-        console.error('Error fetching time slots', error);
-      });
-  }
-
   onSubmit() {
-
-    console.log(`Date: ${this.selectedDate}, Service: ${this.selectedService}, Time Slot: ${this.selectedTimeSlot}`);
-  
+    let [hours, minutes] = this.selectedTimeSlot.split(":").map(Number);
+    this.selectedDate.setHours(hours, minutes, 0, 0);
+    this.dataService.saveReservation(
+      this.salonId,
+      this.selectedDate
+    ).subscribe(
+      res => {
+        console.log(res)
+      }, error => {
+        console.error('Error fetching services', error);
+      })
   }
 }
