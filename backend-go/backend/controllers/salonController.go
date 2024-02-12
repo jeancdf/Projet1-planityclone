@@ -42,19 +42,10 @@ func UpdateSalon(c *gin.Context) {
 	db := database.Db
 	id := c.Param("id")
 	var salon models.Salon
-	user_id, exists := c.Get("userID")
-	if !exists {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
-		return
-	}
+
 
 	if err := db.First(&salon, id).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Salon not found"})
-		return
-	}
-
-	if salon.UserID != user_id {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
 		return
 	}
 
