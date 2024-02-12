@@ -5,7 +5,6 @@ import (
 	models "backend/backend/models"
 	userModels "backend/backend/models"
 	"net/http"
-	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -42,7 +41,6 @@ func CreateSalon(c *gin.Context) {
 func UpdateSalon(c *gin.Context) {
 	db := database.Db
 	id := c.Param("id")
-
 	var salon models.Salon
 	user_id, exists := c.Get("userID")
 	if !exists {
@@ -60,13 +58,29 @@ func UpdateSalon(c *gin.Context) {
 		return
 	}
 
-	if err := c.BindJSON(&salon); err != nil {
+	var updatedSalon models.Salon
+	if err := c.BindJSON(&updatedSalon); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	salon.UpdatedAt = time.Now()
-	db.Save(&salon)
+	db.Model(&salon).Updates(updatedSalon)
+
+	var serviceIDs []uint
+	if err := c.BindJSON(&serviceIDs); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	db.Model(&salon).Association("Services").Clear()
+
+	for _, serviceID := range serviceIDs {
+		var service models.Service
+		if db.First(&service, serviceID).Error == nil {
+			db.Model(&salon).Association("Services").Append(&service)
+		}
+	}
+
 	c.JSON(http.StatusOK, gin.H{"data": salon})
 }
 
