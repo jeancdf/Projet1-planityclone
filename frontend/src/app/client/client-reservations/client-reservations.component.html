@@ -7,10 +7,13 @@
       <li *ngFor="let reservation of clientReservations" class="list-group-item">
         Reservation Date and Time: {{reservation.reservation_date | date:'fullDate'}} at {{reservation.reservation_date | date:'shortTime'}}
         <br>
-        Status: <span [class]="reservation.status ? 'text-success' : 'text-danger'">
-          {{reservation.status ? 'Accepted' : 'Pending'}}
+        Status: <span [ngClass]="{
+            'text-success': reservation.status === true,
+            'text-danger': reservation.status === false,
+            'text-warning': reservation.status === null
+          }">
+          {{ reservation.status === true ? 'Accepted' : reservation.status === false ? 'Refused' : 'Pending' }}
         </span>
       </li>
     </ul>
-  </div>
-  
+</div>

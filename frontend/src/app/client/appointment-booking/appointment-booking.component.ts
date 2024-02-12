@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { DataService } from '../../service/data.service';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -28,7 +29,7 @@ export class AppointmentBookingComponent {
   ];
   salonId: any;
 
-  constructor(private dataService: DataService, private http: HttpClient, private route: ActivatedRoute) {
+  constructor(private dataService: DataService, private http: HttpClient, private route: ActivatedRoute, private toastr: ToastrService ) {
 
 
   }
@@ -38,13 +39,17 @@ export class AppointmentBookingComponent {
       this.salonId = params.get('id');
     });
     this.dataService.fetchSalonServices(this.salonId)
-      .subscribe(salons => {
-        this.services = salons.data.services;
-      }, error => {
-        console.error('Error fetching salons', error);
+      .subscribe({
+        next: (salons) => {
+          this.services = salons.data.services;
+          this.toastr.success('Services fetched successfully!');
+        },
+        error: (error) => {
+          console.error('Error fetching salons', error);
+          this.toastr.error('Failed to fetch services.');
+        }
       });
   }
-
   onDateChange() {
     // if (this.selectedDate) {
     //   this.fetchAvailableTimeSlots(this.selectedDate);
@@ -66,11 +71,15 @@ export class AppointmentBookingComponent {
     this.dataService.saveReservation(
       this.salonId,
       this.selectedDate
-    ).subscribe(
-      res => {
-        console.log(res)
-      }, error => {
-        console.error('Error fetching services', error);
-      })
+    ).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.toastr.success('Reservation saved successfully!');
+      },
+      error: (error) => {
+        console.error('Error saving reservation', error);
+        this.toastr.error('Failed to save reservation.');
+      }
+    });
   }
 }
