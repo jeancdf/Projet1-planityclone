@@ -125,7 +125,7 @@ func GetMySalons(c *gin.Context) {
 		return
 	}
 	var salons []models.Salon
-	if err := db.Where("user_id = ?", userID).Find(&salons).Error; err != nil {
+	if err := db.Where("user_id = ?", userID).Preload("Services").Find(&salons).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
