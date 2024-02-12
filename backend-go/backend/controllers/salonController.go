@@ -5,7 +5,6 @@ import (
 	models "backend/backend/models"
 	userModels "backend/backend/models"
 	"net/http"
-	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -42,28 +41,63 @@ func CreateSalon(c *gin.Context) {
 func UpdateSalon(c *gin.Context) {
 	db := database.Db
 	id := c.Param("id")
-
 	var salon models.Salon
+	user_id, exists := c.Get("userID")
+	if !exists {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+		return
+	}
+
 	if err := db.First(&salon, id).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Salon not found"})
 		return
 	}
 
-	if err := c.BindJSON(&salon); err != nil {
+	if salon.UserID != user_id {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+		return
+	}
+
+	var updatedSalon models.Salon
+	if err := c.BindJSON(&updatedSalon); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	salon.UpdatedAt = time.Now()
-	db.Save(&salon)
+	db.Model(&salon).Updates(updatedSalon)
+
+	var serviceIDs []uint
+	if err := c.BindJSON(&serviceIDs); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	db.Model(&salon).Association("Services").Clear()
+
+	for _, serviceID := range serviceIDs {
+		var service models.Service
+		if db.First(&service, serviceID).Error == nil {
+			db.Model(&salon).Association("Services").Append(&service)
+		}
+	}
+
 	c.JSON(http.StatusOK, gin.H{"data": salon})
 }
 
 func DeleteSalon(c *gin.Context) {
 	db := database.Db
 	id := c.Params.ByName("id")
+	user_id, exists := c.Get("userID")
+	if !exists {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+		return
+	}
 	var salon userModels.Salon
 	db.First(&salon, id)
+	if salon.UserID != user_id {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+		return
+	}
 	if salon.ID != 0 {
 		db.Delete(&salon)
 		c.JSON(http.StatusOK, gin.H{"data": true})
@@ -75,8 +109,11 @@ func DeleteSalon(c *gin.Context) {
 func GetSalon(c *gin.Context) {
 	db := database.Db
 	id := c.Params.ByName("id")
-	var salon userModels.Salon
-	db.First(&salon, id)
+	var salon models.Salon
+	if err := db.Preload("Services").First(&salon, id).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Salon not found"})
+		return
+	}
 	c.JSON(http.StatusOK, gin.H{"data": salon})
 }
 
@@ -108,30 +145,28 @@ func GetAllServices(c *gin.Context) {
 func GetSalonServices(c *gin.Context) {
 	db := database.Db
 	salonId := c.Params.ByName("salonId")
-	var salon userModels.Salon
+	var salon models.Salon
 
-	if err := db.First(&salon, salonId).Error; err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": err.Error()})
+	if err := db.Preload("Services").First(&salon, salonId).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Salon not found"})
 		return
 	}
 
-	var serviceIDs []uint
-	db.Table("salon_service").Where("salon_id = ?", salonId).Pluck("service_id", &serviceIDs)
-
-	var services []models.Service
-	if err := db.Where("id IN (?)", serviceIDs).Find(&services).Error; err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
-	}
-	c.JSON(http.StatusOK, gin.H{"data": services})
+	c.JSON(http.StatusOK, gin.H{"data": salon.Services})
 }
 
 func GetSalonProfile(c *gin.Context) {
 	db := database.Db
 	id := c.Params.ByName("id")
-	var salon userModels.Salon
-	db.First(&salon, id)
-	var user userModels.User
-	db.First(&user, salon.UserID)
+	var salon models.Salon
+	if err := db.Preload("Services").First(&salon, id).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Salon not found"})
+		return
+	}
+	var user models.User
+	if err := db.First(&user, salon.UserID).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
+		return
+	}
 	c.JSON(http.StatusOK, gin.H{"data": gin.H{"salon": salon, "user": user}})
 }

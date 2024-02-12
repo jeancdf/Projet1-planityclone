@@ -38,12 +38,19 @@ func GetReservations(c *gin.Context) {
 }
 
 func CreateReservation(c *gin.Context) {
+	user_id, exists := c.Get("userID")
+	if !exists {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+		return
+	}
 	db := database.Db
 	var reservation models.Reservation
 	if err := c.BindJSON(&reservation); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+	reservation.UserID = user_id.(uint)
+	reservation.Status = nil
 	db.Create(&reservation)
 	c.JSON(http.StatusOK, gin.H{"data": reservation})
 }
