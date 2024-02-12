@@ -206,8 +206,13 @@ func GetMySalonsReservations(c *gin.Context) {
 		salonIDs = append(salonIDs, salon.ID)
 	}
 
+	if len(salonIDs) == 0 {
+		c.JSON(http.StatusOK, gin.H{"data": []models.Reservation{}})
+		return
+	}
+
 	var reservations []models.Reservation
-	if err := db.Where("salon_id IN ?", salonIDs).Find(&reservations).Error; err != nil {
+	if err := db.Where("salon_id IN (?)", salonIDs).Find(&reservations).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
