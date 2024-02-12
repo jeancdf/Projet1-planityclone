@@ -104,7 +104,7 @@ export class DataService {
   fetchReservation () {
     return this.getHttpOptions().pipe(
       switchMap(options =>
-        this.http.get(`api/myreservations`, options)
+        this.http.get(`api/mysalonsreservations`, options)
       )
     );
   }
@@ -126,6 +126,22 @@ export class DataService {
     return this.getHttpOptions().pipe(
       switchMap(options =>
         this.http.post(`/api/reservations`, data, options)
+      )
+    );
+  }
+
+  acceptReservation(salonId: any, reservationId: any) {
+    return this.getHttpOptions().pipe(
+      switchMap(options =>
+        this.http.put(`api/salons/${salonId}/reservations/${reservationId}/accept`,{}, options)
+      )
+    );
+  }
+
+  refuseReservation(salonId: any, reservationId: any) {
+    return this.getHttpOptions().pipe(
+      switchMap(options =>
+        this.http.put(`api/salons/${salonId}/reservations/${reservationId}/decline`,{}, options)
       )
     );
   }

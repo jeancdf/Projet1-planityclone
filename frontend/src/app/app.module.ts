@@ -30,6 +30,7 @@ import { SignupComponent } from './signup/signup.component';
 import { SalonServicesComponent } from './salon/salon-services/salon-services.component';
 import { SalonClientListComponent } from './salon/salon-client-list/salon-client-list.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { ToastrModule } from 'ngx-toastr';
 
 
 @NgModule({
@@ -64,6 +65,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
     MatButtonModule,
     MatNativeDateModule,
     NgSelectModule,
+    ToastrModule.forRoot(),
   ],
   providers: [
     AuthGuard,
